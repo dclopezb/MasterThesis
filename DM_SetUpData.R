@@ -1,11 +1,10 @@
 #___________________________________________________________________________________________________________________________________________________
 #___________________________________________________________________________________________________________________________________________________
-#_________________________________________Prediccion del riesgo default en acuerdos de ingreso compartido:__________________________________________
-#_____________________Evidencia para la financiacion de educacion superior en Colombia usando metodos de machine learning___________________________
+#_________________________________________Prediccion del riesgo Default en Acuerdos de Ingreso Compartido:__________________________________________
 #__________________________________________________MSc.(c) Diana Carolina Lopez Becerra_____________________________________________________________
-#___________________________________________________________Ph.D.Giovanni Munoz_____________________________________________________________________
+#___________________________________________________________Ph.D.Hernando Diaz_____________________________________________________________________
 #__________________________________________Universidad Nacional de Colombia, sede Bogota D.C._______________________________________________________
-#_________________________________________________________________2019______________________________________________________________________________
+#_________________________________________________________________2020______________________________________________________________________________
 
 #manejar tildes#####################################################################################################################################
 Sys.setlocale('LC_ALL','es_CO.iso88591')
@@ -57,7 +56,7 @@ for(i in 1:nrow(base)){
 }
 base$Riesgo<-factor(base$Riesgo)
 
-#crear la variable Región de nacimiento a partir de la variable Dpto de nacimiento##################################################################
+#crear la variable RegiÃ³n de nacimiento a partir de la variable Dpto de nacimiento##################################################################
 base$RegNac<-as.character("a")
 for(i in 1:nrow(base)){
   if(base$DptoNac[i]=='ATLANTICO'||base$DptoNac[i]=="BOLIVAR"||base$DptoNac[i]=="CORDOBA"
@@ -110,16 +109,16 @@ levels(base$RespEcnm)[3] <-'El postulante'
 #IES<-count(base$IES)
 #IES[order(IES$freq),]
 
-#editar la variable Nivel de formación##############################################################################################################
+#editar la variable Nivel de formaciÃ³n##############################################################################################################
 levels(base$NivFrmc)[1] <-"Especializacion"
 levels(base$NivFrmc)[2] <-"Maestria"
 levels(base$NivFrmc)[3] <-"Universitario"
 base$NivFrmc<-factor(base$NivFrmc,levels =c("Universitario", "Especializacion", "Maestria"))
 
-#editar la variable Programa académico: tabla que organiza de menor a mayor la frecuencia del PA del postulante#####################################
+#editar la variable Programa acadÃ©mico: tabla que organiza de menor a mayor la frecuencia del PA del postulante#####################################
 #PA<-count(base$PA)
 #PA[order(PA$freq),]
-#editar la variable Metodología#####################################################################################################################
+#editar la variable MetodologÃ­a#####################################################################################################################
 levels(base$Metdlg)[1] <-"Distancia"
 base$Metdlg<-factor(base$Metdlg,levels =c("Presencial", "Virtual","Distancia"))
 
@@ -142,16 +141,16 @@ experimento<-base[base$TipBase=="Experimiento",]
 #crear objeto colores para las graficas#############################################################################################################
 coloresCM<-c("lightcyan4","cadetblue4","cadetblue", "cadetblue3","lightblue","lightblue2","lightcyan2")
 
-#construccion de rangos para las variables numéricas##################################################################################################
-#crear la variable Rango edad postulación: a partir del analisis realizado con la muestra y la variable "edad postulación"##########################
+#construccion de rangos para las variables numÃ©ricas##################################################################################################
+#crear la variable Rango edad postulaciÃ³n: a partir del analisis realizado con la muestra y la variable "edad postulaciÃ³n"##########################
 R_EdadPost<-woe.binning(muestra, "Default", "EdadPost") 
 muestra<-woe.binning.deploy(muestra, R_EdadPost, add.woe.or.dum.var = "woe")
 
-#crear la variable Rango periodos programa académico: a partir del analisis realizado con la muestra y la variable "PrdPA"##########################
+#crear la variable Rango periodos programa acadÃ©mico: a partir del analisis realizado con la muestra y la variable "PrdPA"##########################
 R_PrdPA<-woe.binning(muestra, "Default", "PrdPA") 
 muestra<-woe.binning.deploy(muestra, R_PrdPA, add.woe.or.dum.var = "woe")
 
-#crear la variable Rango Valor matrícula semestral: a partir del analisis realizado con la muestra y la variable "Mtrc"#############################
+#crear la variable Rango Valor matrÃ­cula semestral: a partir del analisis realizado con la muestra y la variable "Mtrc"#############################
 muestra$Mtrc<-as.numeric(muestra$Mtrc)
 R_Mtrc<-woe.binning(muestra, "Default", "Mtrc") 
 muestra<-woe.binning.deploy(muestra, R_Mtrc, add.woe.or.dum.var = "woe")
@@ -234,7 +233,7 @@ muestra<-woe.binning.deploy(muestra, R_I_cSalud, add.woe.or.dum.var = "woe")
 R_I_cSoc<-woe.binning(muestra, "Default", "I_cSoc") 
 muestra<-woe.binning.deploy(muestra, R_I_cSoc, add.woe.or.dum.var = "woe")
 
-#crear la variable Rango Puntaje prueba Intereses-Técnicos y tecnologicos:a partir del analisis realizado con la muestra###############################################
+#crear la variable Rango Puntaje prueba Intereses-TÃ©cnicos y tecnologicos:a partir del analisis realizado con la muestra###############################################
 R_I_tyt<-woe.binning(muestra, "Default", "I_tyt") 
 muestra<-woe.binning.deploy(muestra, R_I_tyt, add.woe.or.dum.var = "woe")
 
@@ -246,7 +245,7 @@ muestra<-woe.binning.deploy(muestra, R_I_matCNat, add.woe.or.dum.var = "woe")
 R_I<-woe.binning(muestra, "Default", "Intereses") 
 muestra<-woe.binning.deploy(muestra, R_I, add.woe.or.dum.var = "woe")
 
-#crear la variable Rango Puntaje prueba de selección a partir del analisis realizado con la muestra##############################################################
+#crear la variable Rango Puntaje prueba de selecciÃ³n a partir del analisis realizado con la muestra##############################################################
 R_PrbSel<-woe.binning(muestra, "Default", "PrbSel") 
 muestra<-woe.binning.deploy(muestra, R_PrbSel, add.woe.or.dum.var = "woe")
 
@@ -273,28 +272,28 @@ names(muestra)
 ####################################construir tablas de contingencia: variable de interes vs posibles predictores ##################################
 ####################################################################################################################################################
 
-#1Género############################################################################################################################################
+#1GÃ©nero############################################################################################################################################
 pdf("t1Genero.pdf")
-t1Género<-table(muestra$Genero,muestra$CuotMora)
-plot(CuotMora~Genero,data = muestra,col=coloresCM,ylab="Máximas cuotas en mora alcanzadas",
-     main="Género vs Máximas cuotas en mora alcanzadas",xlab="Género")
+t1GÃ©nero<-table(muestra$Genero,muestra$CuotMora)
+plot(CuotMora~Genero,data = muestra,col=coloresCM,ylab="MÃ¡ximas cuotas en mora alcanzadas",
+     main="GÃ©nero vs MÃ¡ximas cuotas en mora alcanzadas",xlab="GÃ©nero")
 dev.off()
 
 pdf("t1_R_Gen.pdf")
 t1_R_Gen<-table(muestra$Genero,muestra$Riesgo)
-plot(Riesgo~Genero,data = muestra,col=coloresCM,ylab="Riesgo",main="Género vs Riesgo",xlab="Género")
+plot(Riesgo~Genero,data = muestra,col=coloresCM,ylab="Riesgo",main="GÃ©nero vs Riesgo",xlab="GÃ©nero")
 dev.off()
 
 pdf("t1_D_Gen.pdf")
 t1_D_Gen<-table(muestra$Genero,muestra$Default)
-plot(Default~Genero,data = muestra,col=coloresCM,ylab="Default",main="Género vs Default",xlab="Género")
+plot(Default~Genero,data = muestra,col=coloresCM,ylab="Default",main="GÃ©nero vs Default",xlab="GÃ©nero")
 dev.off()
 
 #2Estado civil#######################################################################################################################################
 pdf("t2EstCiv.pdf")
 t2EstCiv<-table(muestra$EstCiv,muestra$CuotMora)
-plot(CuotMora~EstCiv,data = muestra,col=coloresCM,ylab="Máximas cuotas en mora alcanzadas",
-     main="Estado civil vs Máximas cuotas en mora alcanzadas",xlab="Estado civil")
+plot(CuotMora~EstCiv,data = muestra,col=coloresCM,ylab="MÃ¡ximas cuotas en mora alcanzadas",
+     main="Estado civil vs MÃ¡ximas cuotas en mora alcanzadas",xlab="Estado civil")
 dev.off()
 
 pdf("t2_R_EstCiv.pdf")
@@ -307,28 +306,28 @@ t2_D_EstCiv<-table(muestra$EstCiv,muestra$Default)
 plot(Default~EstCiv,data = muestra,col=coloresCM,ylab="Default",main="Estado civil vs Default",xlab="Estado civil")
 dev.off()
 
-#3Dpto y/o Región de nacimiento######################################################################################################################
+#3Dpto y/o RegiÃ³n de nacimiento######################################################################################################################
 pdf("t3RegNac.pdf")
 t3RegNac<-table(muestra$RegNac,muestra$CuotMora)
-plot(CuotMora~RegNac,data = muestra,col=coloresCM,ylab="Máximas cuotas en mora alcanzadas",
-     main="Región de nacimiento vs Máximas cuotas en mora alcanzadas",xlab="Región de nacimiento")
+plot(CuotMora~RegNac,data = muestra,col=coloresCM,ylab="MÃ¡ximas cuotas en mora alcanzadas",
+     main="RegiÃ³n de nacimiento vs MÃ¡ximas cuotas en mora alcanzadas",xlab="RegiÃ³n de nacimiento")
 dev.off()
 
 pdf("t3_R_RegNac.pdf")
 t3_R_RegNac<-table(muestra$RegNac,muestra$Riesgo)
-plot(Riesgo~RegNac,data = muestra,col=coloresCM,ylab="Riesgo",main="Región de nacimiento vs Riesgo",xlab="Región de nacimiento")
+plot(Riesgo~RegNac,data = muestra,col=coloresCM,ylab="Riesgo",main="RegiÃ³n de nacimiento vs Riesgo",xlab="RegiÃ³n de nacimiento")
 dev.off()
 
 pdf("t3_D_RegNac.pdf")
 t3_D_RegNac<-table(muestra$RegNac,muestra$Default)
-plot(Default~RegNac,data = muestra,col=coloresCM,ylab="Default",main="Región de nacimiento vs Riesgo",xlab="Región de nacimiento")
+plot(Default~RegNac,data = muestra,col=coloresCM,ylab="Default",main="RegiÃ³n de nacimiento vs Riesgo",xlab="RegiÃ³n de nacimiento")
 dev.off()
 
 #4Nacido en capital#################################################################################################################################
 pdf("t4NacCap.pdf")
 t4NacCap<-table(muestra$NacCap,muestra$CuotMora)
-plot(CuotMora~NacCap,data = muestra,col=coloresCM,ylab="Máximas cuotas en mora alcanzadas",xlab="El Municipio de nacimiento es capital de departamento?",
-     main="El Municipio de nacimiento es capital de departamento? vs Máximas cuotas en mora alcanzadas")
+plot(CuotMora~NacCap,data = muestra,col=coloresCM,ylab="MÃ¡ximas cuotas en mora alcanzadas",xlab="El Municipio de nacimiento es capital de departamento?",
+     main="El Municipio de nacimiento es capital de departamento? vs MÃ¡ximas cuotas en mora alcanzadas")
 dev.off()
 
 pdf("t4_R_NacCap.pdf")
@@ -349,15 +348,15 @@ sd(muestra$EdadPost)
 #la distribucion de la edad de postulacion se encuentra entre 18 y 45 anos, con una media y mediana de 25 anos y una desviacion estandar en 4.4
 hEdadPost<-hist(muestra$EdadPost)
 pdf("h6EdadPost.pdf")
-plot(hEdadPost,main = "Histograma: Edad de postulación",ylab = "Frecuencia",xlab = "Edad de postulación",
+plot(hEdadPost,main = "Histograma: Edad de postulaciÃ³n",ylab = "Frecuencia",xlab = "Edad de postulaciÃ³n",
      xlim= c(10,45), ylim= c(0,130))
 dev.off()
 
 ###
 pdf("t5ResEst.pdf")
 t5ResEst<-table(muestra$ResEst,muestra$CuotMora)
-plot(CuotMora~ResEst,data = muestra,col=coloresCM,ylab="Máximas cuotas en mora alcanzadas",xlab="Estudia en el lugar de residencia?",
-     main="Estudia en el lugar de residencia? vs Máximas cuotas en mora alcanzadas")
+plot(CuotMora~ResEst,data = muestra,col=coloresCM,ylab="MÃ¡ximas cuotas en mora alcanzadas",xlab="Estudia en el lugar de residencia?",
+     main="Estudia en el lugar de residencia? vs MÃ¡ximas cuotas en mora alcanzadas")
 dev.off()
 
 pdf("t5_R_ResEst.pdf")
@@ -372,43 +371,43 @@ dev.off()
 
 pdf("t6EdadPost.pdf")
 t6EdadPost<-table(muestra$EdadPost,muestra$CuotMora)
-plot(CuotMora~EdadPost,data = muestra,col=coloresCM,ylab="Máximas cuotas en mora alcanzadas",
-     main="Edad postulación vs Máximas cuotas en mora alcanzadas",xlab="Edad postulación")
+plot(CuotMora~EdadPost,data = muestra,col=coloresCM,ylab="MÃ¡ximas cuotas en mora alcanzadas",
+     main="Edad postulaciÃ³n vs MÃ¡ximas cuotas en mora alcanzadas",xlab="Edad postulaciÃ³n")
 dev.off()
 
 pdf("t6_R_EdadPost.pdf")
 t6_R_EdadPost<-table(muestra$EdadPost,muestra$Riesgo)
-plot(Riesgo~EdadPost,data = muestra,col=coloresCM,ylab="Riesgo",main="Edad postulación vs Riesgo",xlab="Edad postulación")
+plot(Riesgo~EdadPost,data = muestra,col=coloresCM,ylab="Riesgo",main="Edad postulaciÃ³n vs Riesgo",xlab="Edad postulaciÃ³n")
 dev.off()
 
 pdf("t6_D_EdadPost.pdf")
 t6_D_EdadPost<-table(muestra$EdadPost,muestra$Default)
-plot(Default~EdadPost,data = muestra,col=coloresCM,ylab="Default",main="Edad postulación vs Default",xlab="Edad postulación")
+plot(Default~EdadPost,data = muestra,col=coloresCM,ylab="Default",main="Edad postulaciÃ³n vs Default",xlab="Edad postulaciÃ³n")
 dev.off()
 
 #rangos
 
 pdf("t6EdadPost_R.pdf")
 t6EdadPostR<-table(muestra$EdadPost.binned,muestra$CuotMora)
-plot(CuotMora~EdadPost.binned,data = muestra,col=coloresCM,ylab="Máximas cuotas en mora alcanzadas",xlab="Edad postulación",
-     main="Edad postulación vs Máximas cuotas en mora alcanzadas")
+plot(CuotMora~EdadPost.binned,data = muestra,col=coloresCM,ylab="MÃ¡ximas cuotas en mora alcanzadas",xlab="Edad postulaciÃ³n",
+     main="Edad postulaciÃ³n vs MÃ¡ximas cuotas en mora alcanzadas")
 dev.off()
 
 pdf("t6_R_EdadPostR.pdf")
 t6_R_EdadPostR<-table(muestra$EdadPost.binned,muestra$Riesgo)
-plot(Riesgo~EdadPost.binned,data = muestra,col=coloresCM,ylab="Riesgo",main="Edad postulación vs Riesgo",xlab="Edad postulación")
+plot(Riesgo~EdadPost.binned,data = muestra,col=coloresCM,ylab="Riesgo",main="Edad postulaciÃ³n vs Riesgo",xlab="Edad postulaciÃ³n")
 dev.off()
 
 pdf("t6_D_EdadPostR.pdf")
 t6_D_EdadPostR<-table(muestra$EdadPost.binned,muestra$Default)
-plot(Default~EdadPost.binned,data = muestra,col=coloresCM,ylab="Default",main="Edad postulación vs Default",xlab="Edad postulación")
+plot(Default~EdadPost.binned,data = muestra,col=coloresCM,ylab="Default",main="Edad postulaciÃ³n vs Default",xlab="Edad postulaciÃ³n")
 dev.off()
 
 #7Vive con familiares directos####################################################################################################################
 pdf("t7FamDirViv.pdf")
 t7FamDirViv<-table(muestra$FamDirViv,muestra$CuotMora)
-plot(CuotMora~FamDirViv,data = muestra,col=coloresCM,ylab="Máximas cuotas en mora alcanzadas",xlab="Cantidad de familiares directos que viven con el postulante",
-     main="Cantidad de familiares directos que viven con el postulante vs Máximas cuotas en mora alcanzadas")
+plot(CuotMora~FamDirViv,data = muestra,col=coloresCM,ylab="MÃ¡ximas cuotas en mora alcanzadas",xlab="Cantidad de familiares directos que viven con el postulante",
+     main="Cantidad de familiares directos que viven con el postulante vs MÃ¡ximas cuotas en mora alcanzadas")
 dev.off()
 
 pdf("t7_R_FamDirViv.pdf")
@@ -426,7 +425,7 @@ dev.off()
 #8La madre aun vive###############################################################################################################################
 pdf("t8MadViv.pdf")
 t8MadViv<-table(muestra$MadViv,muestra$CuotMora)
-plot(CuotMora~MadViv,data = muestra,col=coloresCM,ylab="Máximas cuotas en mora alcanzadas",xlab="La madre vive",main="La madre vive vs Máximas cuotas en mora alcanzadas")
+plot(CuotMora~MadViv,data = muestra,col=coloresCM,ylab="MÃ¡ximas cuotas en mora alcanzadas",xlab="La madre vive",main="La madre vive vs MÃ¡ximas cuotas en mora alcanzadas")
 dev.off()
 
 pdf("t8_R_MadViv.pdf")
@@ -442,8 +441,8 @@ dev.off()
 #9El padre aun vive###############################################################################################################################
 pdf("t9PadViv.pdf")
 t9PadViv<-table(muestra$PadViv,muestra$CuotMora)
-plot(CuotMora~PadViv,data = muestra,col=coloresCM,ylab="Máximas cuotas en mora alcanzadas",
-     main="El padre vive vs Máximas cuotas en mora alcanzadas",xlab="El padre vive")
+plot(CuotMora~PadViv,data = muestra,col=coloresCM,ylab="MÃ¡ximas cuotas en mora alcanzadas",
+     main="El padre vive vs MÃ¡ximas cuotas en mora alcanzadas",xlab="El padre vive")
 dev.off()
 
 pdf("t9_R_PadViv.pdf")
@@ -459,8 +458,8 @@ dev.off()
 #10El postulante vive en casa de los padres########################################################################################################
 pdf("t10VivPad.pdf")
 t10VivPad<-table(muestra$VivPad,muestra$CuotMora)
-plot(CuotMora~VivPad,data = muestra,col=coloresCM,ylab="Máximas cuotas en mora alcanzadas",
-     main="El postulante vive en casa de los padres vs Máximas cuotas en mora alcanzadas",xlab="El postulante vive en casa de los padres")
+plot(CuotMora~VivPad,data = muestra,col=coloresCM,ylab="MÃ¡ximas cuotas en mora alcanzadas",
+     main="El postulante vive en casa de los padres vs MÃ¡ximas cuotas en mora alcanzadas",xlab="El postulante vive en casa de los padres")
 dev.off()
 
 pdf("t10_R_VivPad.pdf")
@@ -476,7 +475,7 @@ dev.off()
 #11Cantidad de hermanos############################################################################################################################
 pdf("t11Herm.pdf")
 t11Herm<-table(muestra$Herm,muestra$CuotMora)
-plot(CuotMora~Herm,data = muestra,col=coloresCM,ylab="Máximas cuotas en mora alcanzadas",main="Cantidad de hermanos vs Máximas cuotas en mora alcanzadas",xlab="Cantidad de hermanos")
+plot(CuotMora~Herm,data = muestra,col=coloresCM,ylab="MÃ¡ximas cuotas en mora alcanzadas",main="Cantidad de hermanos vs MÃ¡ximas cuotas en mora alcanzadas",xlab="Cantidad de hermanos")
 dev.off()
 
 pdf("t11_R_Herm.pdf")
@@ -492,8 +491,8 @@ dev.off()
 #12Lugar entre los hermanos########################################################################################################################
 pdf("t12LugHerm.pdf")
 t12LugHerm<-table(muestra$LugHerm,muestra$CuotMora)
-plot(CuotMora~LugHerm,data = muestra,col=coloresCM,ylab="Máximas cuotas en mora alcanzadas",
-     main="Lugar entre los hermanos vs Máximas cuotas en mora alcanzadas",xlab="Lugar entre los hermanos")
+plot(CuotMora~LugHerm,data = muestra,col=coloresCM,ylab="MÃ¡ximas cuotas en mora alcanzadas",
+     main="Lugar entre los hermanos vs MÃ¡ximas cuotas en mora alcanzadas",xlab="Lugar entre los hermanos")
 dev.off()
 
 pdf("t12_R_LugHerm.pdf")
@@ -509,8 +508,8 @@ dev.off()
 #13Cantidad de hijos###############################################################################################################################
 pdf("t13Hijos.pdf")
 t13Hijos<-table(muestra$Hijos,muestra$CuotMora)
-plot(CuotMora~Hijos,data = muestra,col=coloresCM,ylab="Máximas cuotas en mora alcanzadas",
-     main="Cantidad de hijos vs Máximas cuotas en mora alcanzadas",xlab="Cantidad de hijos")
+plot(CuotMora~Hijos,data = muestra,col=coloresCM,ylab="MÃ¡ximas cuotas en mora alcanzadas",
+     main="Cantidad de hijos vs MÃ¡ximas cuotas en mora alcanzadas",xlab="Cantidad de hijos")
 dev.off()
 
 pdf("t13_R_Hijos.pdf")
@@ -535,8 +534,8 @@ dev.off()
 ###
 pdf("t14PromEdadH.pdf")
 t14PromEdadH<-table(muestra$R_PromEdadH,muestra$CuotMora)
-plot(CuotMora~R_PromEdadH,data = muestra,col=coloresCM,ylab="Máximas cuotas en mora alcanzadas",
-     main="Promedio de edad de los hijos del postulante vs Máximas cuotas en mora alcanzadas",xlab="Promedio de edad de los hijos")
+plot(CuotMora~R_PromEdadH,data = muestra,col=coloresCM,ylab="MÃ¡ximas cuotas en mora alcanzadas",
+     main="Promedio de edad de los hijos del postulante vs MÃ¡ximas cuotas en mora alcanzadas",xlab="Promedio de edad de los hijos")
 dev.off()
 
 pdf("t14_R_PromEdadH.pdf")
@@ -554,8 +553,8 @@ dev.off()
 #15Estrato###########################################################################################################################################
 pdf("t15Estrato.pdf")
 t15Estrato<-table(muestra$R_Estrato,muestra$CuotMora)
-plot(CuotMora~R_Estrato,data = muestra,col=coloresCM,ylab="Máximas cuotas en mora alcanzadas",
-     main="Estrato vs Máximas cuotas en mora alcanzadas",xlab="Estrato")
+plot(CuotMora~R_Estrato,data = muestra,col=coloresCM,ylab="MÃ¡ximas cuotas en mora alcanzadas",
+     main="Estrato vs MÃ¡ximas cuotas en mora alcanzadas",xlab="Estrato")
 dev.off()
 
 pdf("t15_R_Estrato.pdf")
@@ -571,8 +570,8 @@ dev.off()
 #16Tipo de vivienda##################################################################################################################################
 pdf("t16TipViv.pdf")
 t16TipViv<-table(muestra$TipViv,muestra$CuotMora)
-plot(CuotMora~TipViv,data = muestra,col=coloresCM,ylab="Máximas cuotas en mora alcanzadas",
-     main="Tipo de Vivienda vs Máximas cuotas en mora alcanzadas",xlab="Tipo de Vivienda")
+plot(CuotMora~TipViv,data = muestra,col=coloresCM,ylab="MÃ¡ximas cuotas en mora alcanzadas",
+     main="Tipo de Vivienda vs MÃ¡ximas cuotas en mora alcanzadas",xlab="Tipo de Vivienda")
 dev.off()
 
 pdf("t16_R_TipViv.pdf")
@@ -588,8 +587,8 @@ dev.off()
 #17Quien responde economicamente por el postulante?################################################################################################
 pdf("t17RespEcnm.pdf")
 t17RespEcnm<-table(muestra$RespEcnm,muestra$CuotMora)
-plot(CuotMora~RespEcnm,data = muestra,col=coloresCM,ylab="Máximas cuotas en mora alcanzadas",
-     main="Quien responde economicamente por el postulante? vs Máximas cuotas en mora alcanzadas",xlab="Quien responde economicamente por el postulante?")
+plot(CuotMora~RespEcnm,data = muestra,col=coloresCM,ylab="MÃ¡ximas cuotas en mora alcanzadas",
+     main="Quien responde economicamente por el postulante? vs MÃ¡ximas cuotas en mora alcanzadas",xlab="Quien responde economicamente por el postulante?")
 dev.off()
 
 pdf("t17_R_RespEcnm.pdf")
@@ -607,8 +606,8 @@ dev.off()
 #18Cantidad de personas dependientes del postulante################################################################################################
 pdf("t18PersDep.pdf")
 t18PersDep<-table(muestra$PersDep,muestra$CuotMora)
-plot(CuotMora~PersDep,data = muestra,col=coloresCM,ylab="Máximas cuotas en mora alcanzadas",
-     main="Cantidad de personas dependientes del postulante vs Máximas cuotas en mora alcanzadas",xlab="Cantidad de personas dependientes del postulante")
+plot(CuotMora~PersDep,data = muestra,col=coloresCM,ylab="MÃ¡ximas cuotas en mora alcanzadas",
+     main="Cantidad de personas dependientes del postulante vs MÃ¡ximas cuotas en mora alcanzadas",xlab="Cantidad de personas dependientes del postulante")
 dev.off()
 
 pdf("t18_R_PersDep.pdf")
@@ -626,8 +625,8 @@ dev.off()
 #19Estado laboral del postulante ##################################################################################################################
 pdf("t19EstLabPost.pdf")
 t19EstLabPost<-table(muestra$EstLabPost,muestra$CuotMora)
-plot(CuotMora~EstLabPost,data = muestra,col=coloresCM,ylab="Máximas cuotas en mora alcanzadas",
-     main="Estado laboral del postulante vs Máximas cuotas en mora alcanzadas",xlab="Estado laboral del postulante")
+plot(CuotMora~EstLabPost,data = muestra,col=coloresCM,ylab="MÃ¡ximas cuotas en mora alcanzadas",
+     main="Estado laboral del postulante vs MÃ¡ximas cuotas en mora alcanzadas",xlab="Estado laboral del postulante")
 dev.off()
 
 pdf("t19_R_EstLabPost.pdf")
@@ -643,13 +642,13 @@ dev.off()
 #20Alta calidad #####################################################################################################################
 pdf("t20AltaCalidad.pdf")
 t20AltaCalidad<-table(muestra$AltaCalidad,muestra$CuotMora)
-plot(CuotMora~AltaCalidad,data = muestra,col=coloresCM,ylab="Máximas cuotas en mora alcanzadas",
-     main="Alta Calidad vs Máximas cuotas en mora alcanzadas",xlab="Alta Calidad IES")
+plot(CuotMora~AltaCalidad,data = muestra,col=coloresCM,ylab="MÃ¡ximas cuotas en mora alcanzadas",
+     main="Alta Calidad vs MÃ¡ximas cuotas en mora alcanzadas",xlab="Alta Calidad IES")
 dev.off()
 
 pdf("t20_R_AltaCalidad.pdf")
 t20_R_AltaCalidad<-table(muestra$AltaCalidad,muestra$Riesgo)
-plot(Riesgo~AltaCalidad,data = muestra,col=coloresCM,ylab="Máximas cuotas en mora alcanzadas",xlab="Alta Calidad IES"
+plot(Riesgo~AltaCalidad,data = muestra,col=coloresCM,ylab="MÃ¡ximas cuotas en mora alcanzadas",xlab="Alta Calidad IES"
      ,main="Alta Calidad vs Riesgo")
 dev.off()
 
@@ -661,8 +660,8 @@ dev.off()
 #21QSapiens IES######################################################################################################################################
 pdf("t21QSapiens.pdf")
 t21QSapiens<-table(muestra$Qsapiens,muestra$CuotMora)
-plot(CuotMora~Qsapiens,data = muestra,col=coloresCM,ylab="Máximas cuotas en mora alcanzadas",xlab="Ranking universitario Q Sapiens",
-     main="Q Sapiens vs Máximas cuotas en mora alcanzadas")
+plot(CuotMora~Qsapiens,data = muestra,col=coloresCM,ylab="MÃ¡ximas cuotas en mora alcanzadas",xlab="Ranking universitario Q Sapiens",
+     main="Q Sapiens vs MÃ¡ximas cuotas en mora alcanzadas")
 dev.off()
 
 pdf("t21_R_QSapiens.pdf")
@@ -675,118 +674,118 @@ t21_D_QSapiens<-table(muestra$Qsapiens,muestra$Default)
 plot(Default~Qsapiens,data = muestra,col=coloresCM,ylab="Default",main="Q Sapiens vs Default",xlab="Ranking universitario Q Sapiens")
 dev.off()
 
-#22Nivel académico#################################################################################################################################
+#22Nivel acadÃ©mico#################################################################################################################################
 pdf("t22NivAcdm.pdf")
 t22NivAcdm<-table(muestra$NivAcdm, muestra$CuotMora)
-plot(CuotMora~NivAcdm,data = muestra,col=coloresCM,ylab="Máximas cuotas en mora alcanzadas",
-     main="Nivel académico del programa a financiar vs Máximas cuotas en mora alcanzadas",xlab="Nivel académico del programa a financiar")
+plot(CuotMora~NivAcdm,data = muestra,col=coloresCM,ylab="MÃ¡ximas cuotas en mora alcanzadas",
+     main="Nivel acadÃ©mico del programa a financiar vs MÃ¡ximas cuotas en mora alcanzadas",xlab="Nivel acadÃ©mico del programa a financiar")
 dev.off()
 
 pdf("t22_R_NivAcdm.pdf")
 t22_R_NivAcdm<-table(muestra$NivAcdm, muestra$Riesgo)
-plot(Riesgo~NivAcdm,data = muestra,col=coloresCM,ylab="Riesgo",main="Nivel académico del programa a financiar vs Riesgo",xlab="Nivel académico del programa a financiar")
+plot(Riesgo~NivAcdm,data = muestra,col=coloresCM,ylab="Riesgo",main="Nivel acadÃ©mico del programa a financiar vs Riesgo",xlab="Nivel acadÃ©mico del programa a financiar")
 dev.off()
 
 pdf("t22_D_NivAcdm.pdf")
 t22_D_NivAcdm<-table(muestra$NivAcdm, muestra$Default)
-plot(Default~NivAcdm, data = muestra,col = coloresCM, ylab ="Default",main = "Nivel académico del programa a financiar vs Default",xlab="Nivel académico del programa a financiar")
+plot(Default~NivAcdm, data = muestra,col = coloresCM, ylab ="Default",main = "Nivel acadÃ©mico del programa a financiar vs Default",xlab="Nivel acadÃ©mico del programa a financiar")
 dev.off()
 
-#22Nivel formación#################################################################################################################################
+#22Nivel formaciÃ³n#################################################################################################################################
 pdf("t22NivFrmc.pdf")
 t22NivFrmc<-table(muestra$NivFrmc,muestra$CuotMora)
-plot(CuotMora~NivFrmc,data = muestra,col=coloresCM,ylab="Máximas cuotas en mora alcanzadas",
-     main="Nivel formación del programa a financiar vs Máximas cuotas en mora alcanzadas",xlab="Nivel formación del programa a financiar")
+plot(CuotMora~NivFrmc,data = muestra,col=coloresCM,ylab="MÃ¡ximas cuotas en mora alcanzadas",
+     main="Nivel formaciÃ³n del programa a financiar vs MÃ¡ximas cuotas en mora alcanzadas",xlab="Nivel formaciÃ³n del programa a financiar")
 dev.off()
 
 pdf("t22_R_NivFrmc.pdf")
 t22_R_NivFrmc<-table(muestra$NivFrmc,muestra$Riesgo)
-plot(Riesgo~NivFrmc,data = muestra,col=coloresCM,ylab="Riesgo",main="Nivel formación vs Riesgo",xlab="Nivel formación del programa a financiar")
+plot(Riesgo~NivFrmc,data = muestra,col=coloresCM,ylab="Riesgo",main="Nivel formaciÃ³n vs Riesgo",xlab="Nivel formaciÃ³n del programa a financiar")
 dev.off()
 
 pdf("t22_D_NivFrmc.pdf")
 t22_D_NivFrmc<-table(muestra$NivFrmc,muestra$Default)
-plot(Default~NivFrmc,data = muestra,col=coloresCM,ylab="Default",main="Nivel formación vs Default",xlab="Nivel formación del programa a financiar")
+plot(Default~NivFrmc,data = muestra,col=coloresCM,ylab="Default",main="Nivel formaciÃ³n vs Default",xlab="Nivel formaciÃ³n del programa a financiar")
 dev.off()
 
-#23Metodología Programa académico##################################################################################################################
+#23MetodologÃ­a Programa acadÃ©mico##################################################################################################################
 pdf("t23Metdlg.pdf")
 t23Metdlg<-table(muestra$Metdlg,muestra$CuotMora)
-plot(CuotMora~Metdlg,data = muestra,col=coloresCM,ylab="Máximas cuotas en mora alcanzadas",
-     main="Metodología del programa académico vs Máximas cuotas en mora alcanzadas",xlab="Metodología del programa académico")
+plot(CuotMora~Metdlg,data = muestra,col=coloresCM,ylab="MÃ¡ximas cuotas en mora alcanzadas",
+     main="MetodologÃ­a del programa acadÃ©mico vs MÃ¡ximas cuotas en mora alcanzadas",xlab="MetodologÃ­a del programa acadÃ©mico")
 dev.off()
 
 pdf("t23_R_Metdlg.pdf")
 t23_R_Metdlg<-table(muestra$Metdlg,muestra$Riesgo)
-plot(Riesgo~Metdlg,data = muestra,col=coloresCM,ylab="Riesgo",main="Metodología del programa académico vs Riesgo",xlab="Metodología del programa académico")
+plot(Riesgo~Metdlg,data = muestra,col=coloresCM,ylab="Riesgo",main="MetodologÃ­a del programa acadÃ©mico vs Riesgo",xlab="MetodologÃ­a del programa acadÃ©mico")
 dev.off()
 
 pdf("t23_D_Metdlg.pdf")
 t23_D_Metdlg<-table(muestra$Metdlg,muestra$Default)
-plot(Default~Metdlg,data = muestra,col=coloresCM,ylab="Default",main="Metodología del programa académico vs Default",xlab="Metodología del programa académico")
+plot(Default~Metdlg,data = muestra,col=coloresCM,ylab="Default",main="MetodologÃ­a del programa acadÃ©mico vs Default",xlab="MetodologÃ­a del programa acadÃ©mico")
 dev.off()
 
 #24Area conocimiento###############################################################################################################################
 pdf("t24AreaCncm.pdf")
 t24AreaCncm<-table(muestra$AreaCncm,muestra$CuotMora)
-plot(CuotMora~AreaCncm,data = muestra,col=coloresCM,ylab="Máximas cuotas en mora alcanzadas",xlab="Área de conocimiento del programa académico",
-     main="Area de conocimiento vs Máximas cuotas en mora alcanzadas")
+plot(CuotMora~AreaCncm,data = muestra,col=coloresCM,ylab="MÃ¡ximas cuotas en mora alcanzadas",xlab="Ãrea de conocimiento del programa acadÃ©mico",
+     main="Area de conocimiento vs MÃ¡ximas cuotas en mora alcanzadas")
 dev.off()
 
 pdf("t24_R_AreaCncm.pdf")
 t24_R_AreaCncm<-table(muestra$AreaCncm,muestra$Riesgo)
-plot(Riesgo~AreaCncm,data = muestra,col=coloresCM,ylab="Riesgo",main="Area de conocimiento del programa académicovs Riesgo",xlab="Área de conocimiento del programa académico")
+plot(Riesgo~AreaCncm,data = muestra,col=coloresCM,ylab="Riesgo",main="Area de conocimiento del programa acadÃ©micovs Riesgo",xlab="Ãrea de conocimiento del programa acadÃ©mico")
 dev.off()
 
 pdf("t24_D_AreaCncm.pdf")
 t24_D_AreaCncm<-table(muestra$AreaCncm,muestra$Default)
-plot(Default~AreaCncm,data = muestra,col=coloresCM,ylab="Default",main="Area de conocimiento del programa académicovs Default",xlab="Área de conocimiento del programa académico")
+plot(Default~AreaCncm,data = muestra,col=coloresCM,ylab="Default",main="Area de conocimiento del programa acadÃ©micovs Default",xlab="Ãrea de conocimiento del programa acadÃ©mico")
 dev.off()
 
-#25Periodos académicos#############################################################################################################################
+#25Periodos acadÃ©micos#############################################################################################################################
 table(muestra$PrdPA)
 summary(muestra$PrdPA)
 sd(muestra$PrdPA)
 pdf("h25PrdPA.pdf")
-hPrdPA<-hist(muestra$PrdPA, main = "Histograma: Periodos programa académico",xlab = "Periodos programa académico",
+hPrdPA<-hist(muestra$PrdPA, main = "Histograma: Periodos programa acadÃ©mico",xlab = "Periodos programa acadÃ©mico",
              ylab = "Frecuencia", ylim = c(0, 120))
 dev.off()
 
 pdf("t25PrdPA.pdf")
 t25PrdPA<-table(muestra$PrdPA,muestra$CuotMora)
-plot(CuotMora~PrdPA,data = muestra,col=coloresCM,ylab="Máximas cuotas en mora alcanzadas",xlab="Cantidad de periodos del programa académico",
-     main="Cantidad de periodos del programa académico vs Máximas cuotas en mora alcanzadas")
+plot(CuotMora~PrdPA,data = muestra,col=coloresCM,ylab="MÃ¡ximas cuotas en mora alcanzadas",xlab="Cantidad de periodos del programa acadÃ©mico",
+     main="Cantidad de periodos del programa acadÃ©mico vs MÃ¡ximas cuotas en mora alcanzadas")
 dev.off()
 
 pdf("t25_R_PrdPA.pdf")
 t25_R_PrdPA<-table(muestra$PrdPA,muestra$Riesgo)
-plot(Riesgo~PrdPA,data = muestra,col=coloresCM,ylab="Riesgo",xlab="Cantidad de periodos del programa académico",main="Cantidad de periodos del programa académico vs Riesgo")
+plot(Riesgo~PrdPA,data = muestra,col=coloresCM,ylab="Riesgo",xlab="Cantidad de periodos del programa acadÃ©mico",main="Cantidad de periodos del programa acadÃ©mico vs Riesgo")
 dev.off()
 
 pdf("t25_D_PrdPA.pdf")
 t25_D_PrdPA<-table(muestra$PrdPA,muestra$Default)
-plot(Default~PrdPA,data = muestra,col=coloresCM,ylab="Default",xlab="Cantidad de periodos del programa académico",main="Cantidad de periodos del programa académico vs Default")
+plot(Default~PrdPA,data = muestra,col=coloresCM,ylab="Default",xlab="Cantidad de periodos del programa acadÃ©mico",main="Cantidad de periodos del programa acadÃ©mico vs Default")
 dev.off()
 
 #rangos
 
 pdf("t25PrdPA_R.pdf")
 t25PrdPA_R<-table(muestra$PrdPA.binned,muestra$CuotMora)
-plot(CuotMora~PrdPA.binned,data = muestra,col=coloresCM,ylab="Máximas cuotas en mora alcanzadas",xlab="Cantidad de periodos del programa académico",
-     main="Cantidad de periodos del programa académico vs Máximas cuotas en mora alcanzadas")
+plot(CuotMora~PrdPA.binned,data = muestra,col=coloresCM,ylab="MÃ¡ximas cuotas en mora alcanzadas",xlab="Cantidad de periodos del programa acadÃ©mico",
+     main="Cantidad de periodos del programa acadÃ©mico vs MÃ¡ximas cuotas en mora alcanzadas")
 dev.off()
 
 pdf("t25_R_PrdPA_R.pdf")
 t25_R_PrdPA_R<-table(muestra$PrdPA.binned,muestra$Riesgo)
-plot(Riesgo~PrdPA.binned,data = muestra,col=coloresCM,ylab="Riesgo",xlab="Cantidad de periodos del programa académico",main="Cantidad de periodos del programa académico vs Riesgo")
+plot(Riesgo~PrdPA.binned,data = muestra,col=coloresCM,ylab="Riesgo",xlab="Cantidad de periodos del programa acadÃ©mico",main="Cantidad de periodos del programa acadÃ©mico vs Riesgo")
 dev.off()
 
 pdf("t25_D_PrdPA_R.pdf")
 t25_D_PrdPA_r<-table(muestra$PrdPA.binned,muestra$Default)
-plot(Default~PrdPA.binned,data = muestra,col=coloresCM,ylab="Default",xlab="Cantidad de periodos del programa académico",main="Cantidad de periodos del programa académico vs Default")
+plot(Default~PrdPA.binned,data = muestra,col=coloresCM,ylab="Default",xlab="Cantidad de periodos del programa acadÃ©mico",main="Cantidad de periodos del programa acadÃ©mico vs Default")
 dev.off()
 
-#26Valor matrícula semestral#######################################################################################################################
+#26Valor matrÃ­cula semestral#######################################################################################################################
 table(muestra$Mtrc)
 #hay dos valores atipicos: 26.000.000 y 22.400.000 COP, se sabe porque esas universidades no son tan caras; revision en SF: sea justo a 2.600.0000
 #la otra postulacion parece estar correcta porque el desembolso fue por 17.000.000 COP, la persona aun es estudiante
@@ -795,47 +794,47 @@ sd(muestra$Mtrc)
 #la distribucion del valor de la matricula se encuentra entre 100.000 COP (100k) y 14.600.000, con una media de 5.023.091,
 #mediana de 3.798.000 y una desviacion  estandar de 2979964
 pdf("h26Mtrc.pdf")
-hMtrc<-hist(muestra$Mtrc, main = "Histograma: Valor matrícula semestral",xlab = "Valor matrícula semestral (COP)", 
+hMtrc<-hist(muestra$Mtrc, main = "Histograma: Valor matrÃ­cula semestral",xlab = "Valor matrÃ­cula semestral (COP)", 
             ylab = "Frecuencia", xlim = c(0,20000000), ylim = c(0,140))
 dev.off()
 
 ##
 pdf("t26Mtrc.pdf")
 t26Mtrc<-table(muestra$Mtrc,muestra$CuotMora)
-plot(CuotMora~Mtrc,data = muestra,col=coloresCM,ylab="Máximas cuotas en mora alcanzadas",xlab="Valor matrícula semestral (COP)",
-     main="Valor matrícula semestral vs Máximas cuotas en mora alcanzadas")
+plot(CuotMora~Mtrc,data = muestra,col=coloresCM,ylab="MÃ¡ximas cuotas en mora alcanzadas",xlab="Valor matrÃ­cula semestral (COP)",
+     main="Valor matrÃ­cula semestral vs MÃ¡ximas cuotas en mora alcanzadas")
 dev.off()
 
 pdf("t26_R_Mtrc.pdf")
 t26_R_Mtrc<-table(muestra$Mtrc,muestra$Riesgo)
-plot(Riesgo~Mtrc,data = muestra,col=coloresCM,ylab="Riesgo",main="Valor matrícula semestral vs Riesgo",
-     xlab="Valor matrícula semestral (COP)")
+plot(Riesgo~Mtrc,data = muestra,col=coloresCM,ylab="Riesgo",main="Valor matrÃ­cula semestral vs Riesgo",
+     xlab="Valor matrÃ­cula semestral (COP)")
 dev.off()
 
 pdf("t26_D_Mtrc.pdf")
 t26_D_Mtrc<-table(muestra$Mtrc,muestra$Default)
-plot(Default~Mtrc,data = muestra,col=coloresCM,ylab="Default",main="Valor matrícula semestral vs Default",
-     xlab="Valor matrícula semestral (COP)")
+plot(Default~Mtrc,data = muestra,col=coloresCM,ylab="Default",main="Valor matrÃ­cula semestral vs Default",
+     xlab="Valor matrÃ­cula semestral (COP)")
 dev.off()
 
 #rangos
 
 pdf("t26MtrcR.pdf")
 t26MtrcR<-table(muestra$Mtrc.binned,muestra$CuotMora)
-plot(CuotMora~Mtrc.binned,data = muestra,col=coloresCM,ylab="Máximas cuotas en mora alcanzadas",xlab="Valor matrícula semestral (COP)",
-     main="Valor matrícula semestral vs Máximas cuotas en mora alcanzadas")
+plot(CuotMora~Mtrc.binned,data = muestra,col=coloresCM,ylab="MÃ¡ximas cuotas en mora alcanzadas",xlab="Valor matrÃ­cula semestral (COP)",
+     main="Valor matrÃ­cula semestral vs MÃ¡ximas cuotas en mora alcanzadas")
 dev.off()
 
 pdf("t26_R_MtrcR.pdf")
 t26_R_MtrcR<-table(muestra$Mtrc.binned,muestra$Riesgo)
-plot(Riesgo~Mtrc.binned,data = muestra,col=coloresCM,ylab="Riesgo",main="Valor matrícula semestral vs Riesgo ",
-     xlab="Valor matrícula semestral (COP)")
+plot(Riesgo~Mtrc.binned,data = muestra,col=coloresCM,ylab="Riesgo",main="Valor matrÃ­cula semestral vs Riesgo ",
+     xlab="Valor matrÃ­cula semestral (COP)")
 dev.off()
 
 pdf("t26_D_MtrcR.pdf")
 t26_D_MtrcR<-table(muestra$Mtrc.binned,muestra$Default)
-plot(Default~Mtrc.binned,data = muestra,col=coloresCM,ylab="Default",main="Valor matrícula semestral vs Default",
-     xlab="Valor matrícula semestral (COP)")
+plot(Default~Mtrc.binned,data = muestra,col=coloresCM,ylab="Default",main="Valor matrÃ­cula semestral vs Default",
+     xlab="Valor matrÃ­cula semestral (COP)")
 dev.off()
 
 #27Cultura de pago#################################################################################################################################
@@ -851,8 +850,8 @@ dev.off()
 
 pdf("t27CP.pdf")
 t27CP<-table(muestra$CultPag,muestra$CuotMora)
-plot(CuotMora~CultPag,data = muestra,col=coloresCM,ylab="Máximas cuotas en mora alcanzadas",
-     main="Cultura de pago vs Máximas cuotas en mora alcanzadas",xlab="Cultura de pago (COP)")
+plot(CuotMora~CultPag,data = muestra,col=coloresCM,ylab="MÃ¡ximas cuotas en mora alcanzadas",
+     main="Cultura de pago vs MÃ¡ximas cuotas en mora alcanzadas",xlab="Cultura de pago (COP)")
 dev.off()
 
 pdf("t27_R_CP.pdf")
@@ -868,8 +867,8 @@ dev.off()
 #rangos
 pdf("t27CP_R.pdf")
 t27CP_R<-table(muestra$CultPag.binned,muestra$CuotMora)
-plot(CuotMora~CultPag.binned,data = muestra,col=coloresCM,ylab="Máximas cuotas en mora alcanzadas",
-     main="Cultura de pago vs Máximas cuotas en mora alcanzadas",xlab="Cultura de pago (COP)")
+plot(CuotMora~CultPag.binned,data = muestra,col=coloresCM,ylab="MÃ¡ximas cuotas en mora alcanzadas",
+     main="Cultura de pago vs MÃ¡ximas cuotas en mora alcanzadas",xlab="Cultura de pago (COP)")
 dev.off()
 
 pdf("t27_R_CP_R.pdf")
@@ -895,8 +894,8 @@ dev.off()
 
 pdf("t28PrcntCuota.pdf")
 t28PrcntCuota<-table(muestra$PrcntCuota,muestra$CuotMora)
-plot(CuotMora~PrcntCuota,data = muestra,col=coloresCM,ylab="Máximas cuotas en mora alcanzadas",
-     main="Porcentaje salario comprometido vs Máximas cuotas en mora alcanzadas",xlab="Porcentaje salario comprometido")
+plot(CuotMora~PrcntCuota,data = muestra,col=coloresCM,ylab="MÃ¡ximas cuotas en mora alcanzadas",
+     main="Porcentaje salario comprometido vs MÃ¡ximas cuotas en mora alcanzadas",xlab="Porcentaje salario comprometido")
 dev.off()
 
 pdf("t28_R_PrcntCuota.pdf")
@@ -913,8 +912,8 @@ dev.off()
 
 pdf("t28PrcntCuotaR.pdf")
 t28PrcntCuotaR<-table(muestra$PrcntCuota.binned,muestra$CuotMora)
-plot(CuotMora~PrcntCuota.binned,data = muestra,col=coloresCM,ylab="Máximas cuotas en mora alcanzadas",xlab="Porcentaje salario comprometido",
-     main="Porcentaje salario comprometido vs Máximas cuotas en mora alcanzadas")
+plot(CuotMora~PrcntCuota.binned,data = muestra,col=coloresCM,ylab="MÃ¡ximas cuotas en mora alcanzadas",xlab="Porcentaje salario comprometido",
+     main="Porcentaje salario comprometido vs MÃ¡ximas cuotas en mora alcanzadas")
 dev.off()
 
 pdf("t28_R_PrcntCuotaR.pdf")
@@ -941,8 +940,8 @@ dev.off()
 
 pdf("t29CuotPact.pdf")
 t29CuotPact<-table(muestra$CuotPact,muestra$CuotMora)
-plot(CuotMora~CuotPact,data = muestra,col=coloresCM,ylab="Máximas cuotas en mora alcanzadas",
-     main="Cuotas pactadas vs Máximas cuotas en mora alcanzadas",xlab="Cuotas pactadas")
+plot(CuotMora~CuotPact,data = muestra,col=coloresCM,ylab="MÃ¡ximas cuotas en mora alcanzadas",
+     main="Cuotas pactadas vs MÃ¡ximas cuotas en mora alcanzadas",xlab="Cuotas pactadas")
 dev.off()
 
 pdf("t29_R_CuotPact.pdf")
@@ -958,8 +957,8 @@ dev.off()
 #rangos
 pdf("t29CuotPact.pdf")
 t29CuotPact<-table(muestra$CuotPact.binned,muestra$CuotMora)
-plot(CuotMora~CuotPact.binned,data = muestra,col=coloresCM,ylab="Máximas cuotas en mora alcanzadas",
-     main="Cuotas pactadas vs Máximas cuotas en mora alcanzadas",xlab="Cuotas pactadas")
+plot(CuotMora~CuotPact.binned,data = muestra,col=coloresCM,ylab="MÃ¡ximas cuotas en mora alcanzadas",
+     main="Cuotas pactadas vs MÃ¡ximas cuotas en mora alcanzadas",xlab="Cuotas pactadas")
 dev.off()
 
 pdf("t29_R_CuotPact.pdf")
@@ -980,8 +979,8 @@ dev.off()
 
 pdf("t30L_verb.pdf")
 t30L_verb<-table(muestra$L_verb,muestra$CuotMora)
-plot(CuotMora~L_verb,data = muestra,col=coloresCM,ylab="Máximas cuotas en mora alcanzadas",
-     main="Puntaje prueba Logros-verbal vs Máximas cuotas en mora alcanzadas",xlab="Cuotas pactadas")
+plot(CuotMora~L_verb,data = muestra,col=coloresCM,ylab="MÃ¡ximas cuotas en mora alcanzadas",
+     main="Puntaje prueba Logros-verbal vs MÃ¡ximas cuotas en mora alcanzadas",xlab="Cuotas pactadas")
 dev.off()
 
 pdf("t30_R_L_verb.pdf")
@@ -998,8 +997,8 @@ dev.off()
 
 pdf("t30L_verbR.pdf")
 t30L_verbR<-table(muestra$L_verb.binned,muestra$CuotMora)
-plot(CuotMora~L_verb.binned,data = muestra,col=coloresCM,ylab="Máximas cuotas en mora alcanzadas",
-     main="Puntaje prueba Logros-verbal vs Máximas cuotas en mora alcanzadas",xlab="Puntaje prueba Logros-verbal")
+plot(CuotMora~L_verb.binned,data = muestra,col=coloresCM,ylab="MÃ¡ximas cuotas en mora alcanzadas",
+     main="Puntaje prueba Logros-verbal vs MÃ¡ximas cuotas en mora alcanzadas",xlab="Puntaje prueba Logros-verbal")
 dev.off()
 
 pdf("t30_R_L_verbR.pdf")
@@ -1019,8 +1018,8 @@ dev.off()
 
 pdf("t31L_esp.pdf")
 t31L_esp<-table(muestra$L_esp,muestra$CuotMora)
-plot(CuotMora~L_esp,data = muestra,col=coloresCM,ylab="Máximas cuotas en mora alcanzadas",
-     main="Puntaje prueba Logros-espacial vs Máximas cuotas en mora alcanzadas",xlab="Puntaje prueba Logros-espacial")
+plot(CuotMora~L_esp,data = muestra,col=coloresCM,ylab="MÃ¡ximas cuotas en mora alcanzadas",
+     main="Puntaje prueba Logros-espacial vs MÃ¡ximas cuotas en mora alcanzadas",xlab="Puntaje prueba Logros-espacial")
 dev.off()
 
 pdf("t31_R_L_esp.pdf")
@@ -1037,8 +1036,8 @@ dev.off()
 
 pdf("t31L_espR.pdf")
 t31L_espR<-table(muestra$L_esp.binned,muestra$CuotMora)
-plot(CuotMora~L_esp.binned,data = muestra,col=coloresCM,ylab="Máximas cuotas en mora alcanzadas",
-     main="Puntaje prueba Logros-espacial vs Máximas cuotas en mora alcanzadas",xlab="Puntaje prueba Logros-espacial")
+plot(CuotMora~L_esp.binned,data = muestra,col=coloresCM,ylab="MÃ¡ximas cuotas en mora alcanzadas",
+     main="Puntaje prueba Logros-espacial vs MÃ¡ximas cuotas en mora alcanzadas",xlab="Puntaje prueba Logros-espacial")
 dev.off()
 
 pdf("t31_R_L_espR.pdf")
@@ -1057,13 +1056,13 @@ summary(muestra$L_num)
 sd(muestra$L_num)
 #la distribucion del Puntaje prueba Logros: numerico se encuentra entre 2 y 11 , con una media de 7.7, mediana de 8 y una desviacion estandar de 2.1. 
 pdf("h32L_num.pdf")
-hRP<-hist(muestra$L_num, main = "Histograma: Puntaje prueba Logros-numérico",xlab ="Puntaje prueba Logros-numérico", ylab = "Frecuencia", xlim = c(2,12))
+hRP<-hist(muestra$L_num, main = "Histograma: Puntaje prueba Logros-numÃ©rico",xlab ="Puntaje prueba Logros-numÃ©rico", ylab = "Frecuencia", xlim = c(2,12))
 dev.off()
 
 pdf("t32L_num.pdf")
 t32L_num<-table(muestra$L_num,muestra$CuotMora)
-plot(CuotMora~L_num,data = muestra,col=coloresCM,ylab="Máximas cuotas en mora alcanzadas",xlab="Puntaje prueba Logros-numerico",
-     main="Puntaje prueba Logros-numerico vs Máximas cuotas en mora alcanzadas")
+plot(CuotMora~L_num,data = muestra,col=coloresCM,ylab="MÃ¡ximas cuotas en mora alcanzadas",xlab="Puntaje prueba Logros-numerico",
+     main="Puntaje prueba Logros-numerico vs MÃ¡ximas cuotas en mora alcanzadas")
 dev.off()
 
 pdf("t32_R_L_num.pdf")
@@ -1080,8 +1079,8 @@ dev.off()
 
 pdf("t32L_numR.pdf")
 t32L_numR<-table(muestra$L_num.binned,muestra$CuotMora)
-plot(CuotMora~L_num.binned,data = muestra,col=coloresCM,ylab="Máximas cuotas en mora alcanzadas",xlab="Puntaje prueba Logros-numerico",
-     main="Puntaje prueba Logros-numerico vs Máximas cuotas en mora alcanzadas")
+plot(CuotMora~L_num.binned,data = muestra,col=coloresCM,ylab="MÃ¡ximas cuotas en mora alcanzadas",xlab="Puntaje prueba Logros-numerico",
+     main="Puntaje prueba Logros-numerico vs MÃ¡ximas cuotas en mora alcanzadas")
 dev.off()
 
 pdf("t32_R_L_numR.pdf")
@@ -1100,14 +1099,14 @@ summary(muestra$L_sinV)
 sd(muestra$L_sinV)
 #la distribucion de la prueba de Logros numerico y espacial se encuentra entre 3 y 18, con una media de 11.5, mediana de 12 y una desviacion estandar de 2.9
 pdf("h33L_sinV.pdf")
-hL_V<-hist(muestra$L_sinV, main = "Histograma: Puntaje prueba Logros-numérico y espacial",
-           xlab = "Puntaje prueba Logros-numérico y espacial",ylab = "Frecuencia", xlim = c(0,20))
+hL_V<-hist(muestra$L_sinV, main = "Histograma: Puntaje prueba Logros-numÃ©rico y espacial",
+           xlab = "Puntaje prueba Logros-numÃ©rico y espacial",ylab = "Frecuencia", xlim = c(0,20))
 dev.off()
 
 pdf("t33L_sinV.pdf")
 t33L_sinV<-table(muestra$L_sinV,muestra$CuotMora)
-plot(CuotMora~L_sinV,data = muestra,col=coloresCM,ylab="Máximas cuotas en mora alcanzadas",xlab="Puntaje prueba Logros-numerico y espacial",
-     main="Puntaje prueba Logros-numerico y espacial vs Máximas cuotas en mora alcanzadas")
+plot(CuotMora~L_sinV,data = muestra,col=coloresCM,ylab="MÃ¡ximas cuotas en mora alcanzadas",xlab="Puntaje prueba Logros-numerico y espacial",
+     main="Puntaje prueba Logros-numerico y espacial vs MÃ¡ximas cuotas en mora alcanzadas")
 dev.off()
 
 pdf("t33_R_L_sinV.pdf")
@@ -1126,8 +1125,8 @@ dev.off()
 
 pdf("t33L_sinV_R.pdf")
 t33L_sinV_R<-table(muestra$L_sinV.binned,muestra$CuotMora)
-plot(CuotMora~L_sinV.binned,data = muestra,col=coloresCM,ylab="Máximas cuotas en mora alcanzadas",xlab="Puntaje prueba Logros-numerico y espacial",
-     main="Puntaje prueba Logros-numerico y espacial vs Máximas cuotas en mora alcanzadas")
+plot(CuotMora~L_sinV.binned,data = muestra,col=coloresCM,ylab="MÃ¡ximas cuotas en mora alcanzadas",xlab="Puntaje prueba Logros-numerico y espacial",
+     main="Puntaje prueba Logros-numerico y espacial vs MÃ¡ximas cuotas en mora alcanzadas")
 dev.off()
 
 pdf("t33_R_L_sinV_R.pdf")
@@ -1154,8 +1153,8 @@ dev.off()
 
 pdf("t34Logros.pdf")
 t34Logros<-table(muestra$Logros,muestra$CuotMora)
-plot(CuotMora~Logros,data = muestra,col=coloresCM,ylab="Máximas cuotas en mora alcanzadas",xlab="Puntaje prueba Logros",
-     main="Puntaje prueba Logros vs Máximas cuotas en mora alcanzadas")
+plot(CuotMora~Logros,data = muestra,col=coloresCM,ylab="MÃ¡ximas cuotas en mora alcanzadas",xlab="Puntaje prueba Logros",
+     main="Puntaje prueba Logros vs MÃ¡ximas cuotas en mora alcanzadas")
 dev.off()
 
 pdf("t34_R_Logros.pdf")
@@ -1172,8 +1171,8 @@ dev.off()
 
 pdf("t34LogrosR.pdf")
 t34LogrosR<-table(muestra$Logros.binned,muestra$CuotMora)
-plot(CuotMora~Logros.binned,data = muestra,col=coloresCM,ylab="Máximas cuotas en mora alcanzadas",xlab="Puntaje prueba Logros",
-     main="Puntaje prueba Logros vs Máximas cuotas en mora alcanzadas")
+plot(CuotMora~Logros.binned,data = muestra,col=coloresCM,ylab="MÃ¡ximas cuotas en mora alcanzadas",xlab="Puntaje prueba Logros",
+     main="Puntaje prueba Logros vs MÃ¡ximas cuotas en mora alcanzadas")
 dev.off()
 
 pdf("t34_R_LogrosR.pdf")
@@ -1195,8 +1194,8 @@ dev.off()
 
 pdf("t35P_agrd.pdf")
 t35P_agrd<-table(muestra$P_agrd,muestra$CuotMora)
-plot(CuotMora~P_agrd,data = muestra,col=coloresCM,ylab="Máximas cuotas en mora alcanzadas",xlab="Puntaje prueba personalidad-agradabilidad",
-     main="Puntaje prueba personalidad-agradabilidad vs Máximas cuotas en mora alcanzadas")
+plot(CuotMora~P_agrd,data = muestra,col=coloresCM,ylab="MÃ¡ximas cuotas en mora alcanzadas",xlab="Puntaje prueba personalidad-agradabilidad",
+     main="Puntaje prueba personalidad-agradabilidad vs MÃ¡ximas cuotas en mora alcanzadas")
 dev.off()
 
 pdf("t35_R_P_agrd.pdf")
@@ -1215,8 +1214,8 @@ dev.off()
 
 pdf("t35P_agrdR.pdf")
 t35P_agrdR<-table(muestra$P_agrd.binned,muestra$CuotMora)
-plot(CuotMora~P_agrd.binned,data = muestra,col=coloresCM,ylab="Máximas cuotas en mora alcanzadas",xlab="Puntaje prueba personalidad-agradabilidad",
-     main="Puntaje prueba personalidad-agradabilidad vs Máximas cuotas en mora alcanzadas")
+plot(CuotMora~P_agrd.binned,data = muestra,col=coloresCM,ylab="MÃ¡ximas cuotas en mora alcanzadas",xlab="Puntaje prueba personalidad-agradabilidad",
+     main="Puntaje prueba personalidad-agradabilidad vs MÃ¡ximas cuotas en mora alcanzadas")
 dev.off()
 
 pdf("t35_R_P_agrdR.pdf")
@@ -1240,8 +1239,8 @@ dev.off()
 
 pdf("t36P_apertExp.pdf")
 t36P_apertExp<-table(muestra$P_apertExp,muestra$CuotMora)
-plot(CuotMora~P_apertExp,data = muestra,col=coloresCM,ylab="Máximas cuotas en mora alcanzadas",xlab="Puntaje prueba personalidad-apertura a la experiencia",
-     main="Puntaje prueba personalidad-apertura a la experiencia vs Máximas cuotas en mora alcanzadas")
+plot(CuotMora~P_apertExp,data = muestra,col=coloresCM,ylab="MÃ¡ximas cuotas en mora alcanzadas",xlab="Puntaje prueba personalidad-apertura a la experiencia",
+     main="Puntaje prueba personalidad-apertura a la experiencia vs MÃ¡ximas cuotas en mora alcanzadas")
 dev.off()
 
 pdf("t36_R_P_apertExp.pdf")
@@ -1260,8 +1259,8 @@ dev.off()
 
 pdf("t36P_apertExpR.pdf")
 t36P_apertExpR<-table(muestra$P_apertExp.binned,muestra$CuotMora)
-plot(CuotMora~P_apertExp.binned,data = muestra,col=coloresCM,ylab="Máximas cuotas en mora alcanzadas",xlab="Puntaje prueba personalidad-apertura a la experiencia",
-     main="Puntaje prueba personalidad-apertura a la experiencia vs Máximas cuotas en mora alcanzadas")
+plot(CuotMora~P_apertExp.binned,data = muestra,col=coloresCM,ylab="MÃ¡ximas cuotas en mora alcanzadas",xlab="Puntaje prueba personalidad-apertura a la experiencia",
+     main="Puntaje prueba personalidad-apertura a la experiencia vs MÃ¡ximas cuotas en mora alcanzadas")
 dev.off()
 
 pdf("t36_R_P_apertExpR.pdf")
@@ -1286,8 +1285,8 @@ dev.off()
 
 pdf("t37P_conc.pdf")
 t37P_conc<-table(muestra$P_conc,muestra$CuotMora)
-plot(CuotMora~P_conc,data = muestra,col=coloresCM,ylab="Máximas cuotas en mora alcanzadas",xlab="Puntaje prueba personalidad-conciencia",
-     main="Puntaje prueba personalidad-conciencia vs Máximas cuotas en mora alcanzadas")
+plot(CuotMora~P_conc,data = muestra,col=coloresCM,ylab="MÃ¡ximas cuotas en mora alcanzadas",xlab="Puntaje prueba personalidad-conciencia",
+     main="Puntaje prueba personalidad-conciencia vs MÃ¡ximas cuotas en mora alcanzadas")
 dev.off()
 
 pdf("t37_R_P_conc.pdf")
@@ -1305,8 +1304,8 @@ dev.off()
 #rangos
 pdf("t37P_concR.pdf")
 t37P_concR<-table(muestra$P_conc.binned,muestra$CuotMora)
-plot(CuotMora~P_conc.binned,data = muestra,col=coloresCM,ylab="Máximas cuotas en mora alcanzadas",xlab="Puntaje prueba personalidad-conciencia",
-     main="Puntaje prueba personalidad-conciencia vs Máximas cuotas en mora alcanzadas")
+plot(CuotMora~P_conc.binned,data = muestra,col=coloresCM,ylab="MÃ¡ximas cuotas en mora alcanzadas",xlab="Puntaje prueba personalidad-conciencia",
+     main="Puntaje prueba personalidad-conciencia vs MÃ¡ximas cuotas en mora alcanzadas")
 dev.off()
 
 pdf("t37_R_P_concR.pdf")
@@ -1330,8 +1329,8 @@ dev.off()
 
 pdf("t38P_estEmc.pdf")
 t38P_estEmc<-table(muestra$P_estEmc,muestra$CuotMora)
-plot(CuotMora~P_estEmc,data = muestra,col=coloresCM,ylab="Máximas cuotas en mora alcanzadas",xlab="Puntaje prueba personalidad-estabilidad emocional",
-     main="Puntaje prueba personalidad-estabilidad emocional vs Máximas cuotas en mora alcanzadas")
+plot(CuotMora~P_estEmc,data = muestra,col=coloresCM,ylab="MÃ¡ximas cuotas en mora alcanzadas",xlab="Puntaje prueba personalidad-estabilidad emocional",
+     main="Puntaje prueba personalidad-estabilidad emocional vs MÃ¡ximas cuotas en mora alcanzadas")
 dev.off()
 
 pdf("t38_R_P_estEmc.pdf")
@@ -1350,8 +1349,8 @@ dev.off()
 
 pdf("t38P_estEmcR.pdf")
 t38P_estEmcR<-table(muestra$P_estEmc.binned,muestra$CuotMora)
-plot(CuotMora~P_estEmc.binned,data = muestra,col=coloresCM,ylab="Máximas cuotas en mora alcanzadas",xlab="Puntaje prueba personalidad-estabilidad emocional",
-     main="Puntaje prueba personalidad-estabilidad emocional vs Máximas cuotas en mora alcanzadas")
+plot(CuotMora~P_estEmc.binned,data = muestra,col=coloresCM,ylab="MÃ¡ximas cuotas en mora alcanzadas",xlab="Puntaje prueba personalidad-estabilidad emocional",
+     main="Puntaje prueba personalidad-estabilidad emocional vs MÃ¡ximas cuotas en mora alcanzadas")
 dev.off()
 
 pdf("t38_R_P_estEmcR.pdf")
@@ -1375,8 +1374,8 @@ dev.off()
 
 pdf("t39P_extrv.pdf")
 t39P_extrv<-table(muestra$P_extrv,muestra$CuotMora)
-plot(CuotMora~P_extrv,data = muestra,col=coloresCM,ylab="Máximas cuotas en mora alcanzadas",xlab="Puntaje prueba personalidad-extraversion",
-     main="Puntaje prueba personalidad-extraversion vs Máximas cuotas en mora alcanzadas")
+plot(CuotMora~P_extrv,data = muestra,col=coloresCM,ylab="MÃ¡ximas cuotas en mora alcanzadas",xlab="Puntaje prueba personalidad-extraversion",
+     main="Puntaje prueba personalidad-extraversion vs MÃ¡ximas cuotas en mora alcanzadas")
 dev.off()
 
 pdf("t39_R_P_extrv.pdf")
@@ -1392,8 +1391,8 @@ dev.off()
 #rangos
 pdf("t39P_extrvR.pdf")
 t39P_extrvR<-table(muestra$P_extrv.binned,muestra$CuotMora)
-plot(CuotMora~P_extrv.binned,data = muestra,col=coloresCM,ylab="Máximas cuotas en mora alcanzadas",xlab="Puntaje prueba personalidad-extraversion",
-     main="Puntaje prueba personalidad-extraversion vs Máximas cuotas en mora alcanzadas")
+plot(CuotMora~P_extrv.binned,data = muestra,col=coloresCM,ylab="MÃ¡ximas cuotas en mora alcanzadas",xlab="Puntaje prueba personalidad-extraversion",
+     main="Puntaje prueba personalidad-extraversion vs MÃ¡ximas cuotas en mora alcanzadas")
 dev.off()
 
 pdf("t39_R_P_extrvR.pdf")
@@ -1414,8 +1413,8 @@ dev.off()
 
 pdf("t40pers.pdf")
 t40pers<-table(muestra$Pers,muestra$CuotMora)
-plot(CuotMora~Pers,data = muestra,col=coloresCM,ylab="Máximas cuotas en mora alcanzadas",
-     main="Puntaje prueba Personalidad vs Máximas cuotas en mora alcanzadas",xlab="Puntaje prueba Personalidad")
+plot(CuotMora~Pers,data = muestra,col=coloresCM,ylab="MÃ¡ximas cuotas en mora alcanzadas",
+     main="Puntaje prueba Personalidad vs MÃ¡ximas cuotas en mora alcanzadas",xlab="Puntaje prueba Personalidad")
 dev.off()
 
 pdf("t40_R_pers.pdf")
@@ -1432,8 +1431,8 @@ dev.off()
 
 pdf("t40persR.pdf")
 t40persR<-table(muestra$Pers.binned,muestra$CuotMora)
-plot(CuotMora~Pers.binned,data = muestra,col=coloresCM,ylab="Máximas cuotas en mora alcanzadas",
-     main="Puntaje prueba Personalidad vs Máximas cuotas en mora alcanzadas",xlab="Puntaje prueba Personalidad")
+plot(CuotMora~Pers.binned,data = muestra,col=coloresCM,ylab="MÃ¡ximas cuotas en mora alcanzadas",
+     main="Puntaje prueba Personalidad vs MÃ¡ximas cuotas en mora alcanzadas",xlab="Puntaje prueba Personalidad")
 dev.off()
 
 pdf("t40_R_persR.pdf")
@@ -1454,8 +1453,8 @@ dev.off()
 
 pdf("t41I_cEcnm.pdf")
 t41I_cEcnm<-table(muestra$I_cEcnm,muestra$CuotMora)
-plot(CuotMora~I_cEcnm,data = muestra,col=coloresCM,ylab="Máximas cuotas en mora alcanzadas",
-     main="Puntaje prueba intereses-ciencias economicas vs Máximas cuotas en mora alcanzadas",xlab="Puntaje prueba Intereses-ciencias economicas")
+plot(CuotMora~I_cEcnm,data = muestra,col=coloresCM,ylab="MÃ¡ximas cuotas en mora alcanzadas",
+     main="Puntaje prueba intereses-ciencias economicas vs MÃ¡ximas cuotas en mora alcanzadas",xlab="Puntaje prueba Intereses-ciencias economicas")
 dev.off()
 
 pdf("t41_R_I_cEcnm.pdf")
@@ -1473,8 +1472,8 @@ dev.off()
 #RANGOS
 pdf("t41I_cEcnmR.pdf")
 t41I_cEcnmR<-table(muestra$I_cEcnm.binned,muestra$CuotMora)
-plot(CuotMora~I_cEcnm.binned,data = muestra,col=coloresCM,ylab="Máximas cuotas en mora alcanzadas",
-     main="Puntaje prueba intereses-ciencias economicas vs Máximas cuotas en mora alcanzadas",xlab="Puntaje prueba Intereses-ciencias economicas")
+plot(CuotMora~I_cEcnm.binned,data = muestra,col=coloresCM,ylab="MÃ¡ximas cuotas en mora alcanzadas",
+     main="Puntaje prueba intereses-ciencias economicas vs MÃ¡ximas cuotas en mora alcanzadas",xlab="Puntaje prueba Intereses-ciencias economicas")
 dev.off()
 
 pdf("t41_R_I_cEcnmR.pdf")
@@ -1496,8 +1495,8 @@ dev.off()
 
 pdf("t42I_ingArq.pdf")
 t42I_ingArq<-table(muestra$I_ingArq,muestra$CuotMora)
-plot(CuotMora~I_ingArq,data = muestra,col=coloresCM,ylab="Máximas cuotas en mora alcanzadas",
-     main="Puntaje prueba intereses-ingenierias y arquitectura vs Máximas cuotas en mora alcanzadas",
+plot(CuotMora~I_ingArq,data = muestra,col=coloresCM,ylab="MÃ¡ximas cuotas en mora alcanzadas",
+     main="Puntaje prueba intereses-ingenierias y arquitectura vs MÃ¡ximas cuotas en mora alcanzadas",
      xlab="Puntaje prueba Intereses-ingenierias y arquitectura")
 dev.off()
 
@@ -1516,9 +1515,9 @@ dev.off()
 #RANGOS
 pdf("t42I_ingArqR.pdf")
 t42I_ingArqR<-table(muestra$I_ingArq.binned,muestra$CuotMora)
-plot(CuotMora~I_ingArq.binned,data = muestra,col=coloresCM,ylab="Máximas cuotas en mora alcanzadas",
+plot(CuotMora~I_ingArq.binned,data = muestra,col=coloresCM,ylab="MÃ¡ximas cuotas en mora alcanzadas",
      xlab="Puntaje prueba Intereses-ingenierias y arquitectura",
-     main="Puntaje prueba intereses-ingenierias y arquitectura vs Máximas cuotas en mora alcanzadas")
+     main="Puntaje prueba intereses-ingenierias y arquitectura vs MÃ¡ximas cuotas en mora alcanzadas")
 dev.off()
 
 pdf("t42_R_I_ingArqR.pdf")
@@ -1541,8 +1540,8 @@ dev.off()
 
 pdf("t43I_bellArt.pdf")
 t43I_bellArt<-table(muestra$I_bellArt,muestra$CuotMora)
-plot(CuotMora~I_bellArt,data = muestra,col=coloresCM,ylab="Máximas cuotas en mora alcanzadas",
-     main="Puntaje prueba intereses-bellas artes vs Máximas cuotas en mora alcanzadas",xlab="Puntaje prueba Intereses-bellas artes")
+plot(CuotMora~I_bellArt,data = muestra,col=coloresCM,ylab="MÃ¡ximas cuotas en mora alcanzadas",
+     main="Puntaje prueba intereses-bellas artes vs MÃ¡ximas cuotas en mora alcanzadas",xlab="Puntaje prueba Intereses-bellas artes")
 dev.off()
 
 pdf("t43_R_I_bellArt.pdf")
@@ -1560,8 +1559,8 @@ dev.off()
 #RANGOS
 pdf("t43I_bellArtR.pdf")
 t43I_bellArtR<-table(muestra$I_bellArt.binned,muestra$CuotMora)
-plot(CuotMora~I_bellArt.binned,data = muestra,col=coloresCM,ylab="Máximas cuotas en mora alcanzadas",
-     main="Puntaje prueba intereses-bellas artes vs Máximas cuotas en mora alcanzadas",xlab="Puntaje prueba Intereses-bellas artes")
+plot(CuotMora~I_bellArt.binned,data = muestra,col=coloresCM,ylab="MÃ¡ximas cuotas en mora alcanzadas",
+     main="Puntaje prueba intereses-bellas artes vs MÃ¡ximas cuotas en mora alcanzadas",xlab="Puntaje prueba Intereses-bellas artes")
 dev.off()
 
 pdf("t43_R_I_bellArtR.pdf")
@@ -1584,8 +1583,8 @@ dev.off()
 
 pdf("t44I_cSalud.pdf")
 t44I_cSalud<-table(muestra$I_cSalud,muestra$CuotMora)
-plot(CuotMora~I_cSalud,data = muestra,col=coloresCM,ylab="Máximas cuotas en mora alcanzadas", xlab="Puntaje prueba Intereses-ciencias de la salud",
-     main="Puntaje prueba intereses-ciencias de la salud vs Máximas cuotas en mora alcanzadas")
+plot(CuotMora~I_cSalud,data = muestra,col=coloresCM,ylab="MÃ¡ximas cuotas en mora alcanzadas", xlab="Puntaje prueba Intereses-ciencias de la salud",
+     main="Puntaje prueba intereses-ciencias de la salud vs MÃ¡ximas cuotas en mora alcanzadas")
 dev.off()
 
 pdf("t44_R_I_cSalud.pdf")
@@ -1604,8 +1603,8 @@ dev.off()
 
 pdf("t44I_cSaludR.pdf")
 t44I_cSaludR<-table(muestra$I_cSalud.binned,muestra$CuotMora)
-plot(CuotMora~I_cSalud.binned,data = muestra,col=coloresCM,ylab="Máximas cuotas en mora alcanzadas",
-     main="Puntaje prueba intereses-ciencias de la salud vs Máximas cuotas en mora alcanzadas", xlab="Puntaje prueba Intereses-ciencias de la salud")
+plot(CuotMora~I_cSalud.binned,data = muestra,col=coloresCM,ylab="MÃ¡ximas cuotas en mora alcanzadas",
+     main="Puntaje prueba intereses-ciencias de la salud vs MÃ¡ximas cuotas en mora alcanzadas", xlab="Puntaje prueba Intereses-ciencias de la salud")
 dev.off()
 
 pdf("t44_R_I_cSaludR.pdf")
@@ -1628,8 +1627,8 @@ dev.off()
 
 pdf("t45I_cSoc.pdf")
 t45I_cSoc.pdf<-table(muestra$I_cSoc,muestra$CuotMora)
-plot(CuotMora~I_cSoc,data = muestra,col=coloresCM,ylab="Máximas cuotas en mora alcanzadas", xlab="Puntaje prueba Intereses-ciencias sociales",
-     main="Puntaje prueba intereses-ciencias sociales vs Máximas cuotas en mora alcanzadas")
+plot(CuotMora~I_cSoc,data = muestra,col=coloresCM,ylab="MÃ¡ximas cuotas en mora alcanzadas", xlab="Puntaje prueba Intereses-ciencias sociales",
+     main="Puntaje prueba intereses-ciencias sociales vs MÃ¡ximas cuotas en mora alcanzadas")
 dev.off()
 
 pdf("t45_R_I_cSoc.pdf")
@@ -1648,8 +1647,8 @@ dev.off()
 
 pdf("t45I_cSocR.pdf")
 t45I_cSocR<-table(muestra$I_cSoc.binned,muestra$CuotMora)
-plot(CuotMora~I_cSoc.binned,data = muestra,col=coloresCM,ylab="Máximas cuotas en mora alcanzadas",
-     main="Puntaje prueba intereses-ciencias sociales vs Máximas cuotas en mora alcanzadas",xlab="Puntaje prueba Intereses-ciencias sociales")
+plot(CuotMora~I_cSoc.binned,data = muestra,col=coloresCM,ylab="MÃ¡ximas cuotas en mora alcanzadas",
+     main="Puntaje prueba intereses-ciencias sociales vs MÃ¡ximas cuotas en mora alcanzadas",xlab="Puntaje prueba Intereses-ciencias sociales")
 dev.off()
 
 pdf("t45_R_I_cSocR.pdf")
@@ -1666,14 +1665,14 @@ dev.off()
 
 #46Puntaje prueba intereses:tecnicas y tecnologicas################################################################################################
 pdf("h46I_tyt.pdf")
-hist(muestra$I_tyt, main = "Histograma: Puntaje prueba intereses-técnicas y tecnológicas",
-     ylab = "Frecuencia", xlab = "Puntaje prueba intereses-técnicas y tecnológicas")
+hist(muestra$I_tyt, main = "Histograma: Puntaje prueba intereses-tÃ©cnicas y tecnolÃ³gicas",
+     ylab = "Frecuencia", xlab = "Puntaje prueba intereses-tÃ©cnicas y tecnolÃ³gicas")
 dev.off()
 
 pdf("t46I_tyt.pdf")
 t46I_tyt.pdf<-table(muestra$I_tyt,muestra$CuotMora)
-plot(CuotMora~I_tyt,data = muestra,col=coloresCM,ylab="Máximas cuotas en mora alcanzadas",xlab="Puntaje prueba Intereses-tecnicas y tecnologicas",
-     main="Puntaje prueba intereses-tecnicas y tecnologicas vs Máximas cuotas en mora alcanzadas")
+plot(CuotMora~I_tyt,data = muestra,col=coloresCM,ylab="MÃ¡ximas cuotas en mora alcanzadas",xlab="Puntaje prueba Intereses-tecnicas y tecnologicas",
+     main="Puntaje prueba intereses-tecnicas y tecnologicas vs MÃ¡ximas cuotas en mora alcanzadas")
 dev.off()
 
 pdf("t46_R_I_tyt.pdf.pdf")
@@ -1692,8 +1691,8 @@ dev.off()
 
 pdf("t46I_tytR.pdf")
 t46I_tytR<-table(muestra$I_tyt.binned,muestra$CuotMora)
-plot(CuotMora~I_tyt.binned,data = muestra,col=coloresCM,ylab="Máximas cuotas en mora alcanzadas",xlab="Puntaje prueba Intereses-tecnicas y tecnologicas",
-     main="Puntaje prueba intereses-tecnicas y tecnologicas vs Máximas cuotas en mora alcanzadas")
+plot(CuotMora~I_tyt.binned,data = muestra,col=coloresCM,ylab="MÃ¡ximas cuotas en mora alcanzadas",xlab="Puntaje prueba Intereses-tecnicas y tecnologicas",
+     main="Puntaje prueba intereses-tecnicas y tecnologicas vs MÃ¡ximas cuotas en mora alcanzadas")
 dev.off()
 
 pdf("t46_R_I_tytR.pdf")
@@ -1716,8 +1715,8 @@ dev.off()
 
 pdf("t47I_matCNat.pdf")
 t47I_matCNat<-table(muestra$I_matCNat,muestra$CuotMora)
-plot(CuotMora~I_matCNat,data = muestra,col=coloresCM,ylab="Máximas cuotas en mora alcanzadas",xlab="Puntaje prueba Intereses-ciencias naturales",
-     main="Puntaje prueba intereses-ciencias naturales vs Máximas cuotas en mora alcanzadas")
+plot(CuotMora~I_matCNat,data = muestra,col=coloresCM,ylab="MÃ¡ximas cuotas en mora alcanzadas",xlab="Puntaje prueba Intereses-ciencias naturales",
+     main="Puntaje prueba intereses-ciencias naturales vs MÃ¡ximas cuotas en mora alcanzadas")
 dev.off()
 
 pdf("t47_R_I_matCNat.pdf")
@@ -1735,8 +1734,8 @@ dev.off()
 #RANGOS
 pdf("t47I_matCNatR.pdf")
 t47I_matCNatR<-table(muestra$I_matCNat.binned,muestra$CuotMora)
-plot(CuotMora~I_matCNat.binned,data = muestra,col=coloresCM,ylab="Máximas cuotas en mora alcanzadas",xlab="Puntaje prueba Intereses-ciencias naturales",
-     main="Puntaje prueba intereses-ciencias naturales vs Máximas cuotas en mora alcanzadas")
+plot(CuotMora~I_matCNat.binned,data = muestra,col=coloresCM,ylab="MÃ¡ximas cuotas en mora alcanzadas",xlab="Puntaje prueba Intereses-ciencias naturales",
+     main="Puntaje prueba intereses-ciencias naturales vs MÃ¡ximas cuotas en mora alcanzadas")
 dev.off()
 
 pdf("t47_R_I_matCNatR.pdf")
@@ -1760,8 +1759,8 @@ dev.off()
 
 pdf("t48Intereses.pdf")
 t48Intereses<-table(muestra$Intereses,muestra$CuotMora)
-plot(CuotMora~Intereses,data = muestra,col=coloresCM,ylab="Máximas cuotas en mora alcanzadas",xlab="Puntaje prueba Intereses",
-     main="Puntaje prueba intereses vs Máximas cuotas en mora alcanzadas")
+plot(CuotMora~Intereses,data = muestra,col=coloresCM,ylab="MÃ¡ximas cuotas en mora alcanzadas",xlab="Puntaje prueba Intereses",
+     main="Puntaje prueba intereses vs MÃ¡ximas cuotas en mora alcanzadas")
 dev.off()
 
 pdf("t48_R_Intereses.pdf")
@@ -1778,8 +1777,8 @@ dev.off()
 
 pdf("t48InteresesR.pdf")
 t48Intereses_R<-table(muestra$Intereses.binned,muestra$CuotMora)
-plot(CuotMora~Intereses.binned,data = muestra,col=coloresCM,ylab="Máximas cuotas en mora alcanzadas",xlab="Puntaje prueba Intereses",
-     main="Puntaje prueba intereses vs Máximas cuotas en mora alcanzadas")
+plot(CuotMora~Intereses.binned,data = muestra,col=coloresCM,ylab="MÃ¡ximas cuotas en mora alcanzadas",xlab="Puntaje prueba Intereses",
+     main="Puntaje prueba intereses vs MÃ¡ximas cuotas en mora alcanzadas")
 dev.off()
 
 pdf("t48_R_InteresesR.pdf")
@@ -1792,52 +1791,52 @@ t48_D_Intereses_R<-table(muestra$Intereses.binned,muestra$Default)
 plot(Default~Intereses.binned,data = muestra,col=coloresCM,ylab="Default",main="Puntaje prueba intereses vs Default",xlab="Puntaje prueba Intereses")
 dev.off()
 
-#49Puntaje prueba selección#########################################################################################################################
+#49Puntaje prueba selecciÃ³n#########################################################################################################################
 table(muestra$PrbSel)
 pdf("h49prueba.pdf")
-hist(muestra$PrbSel, main = "Histograma: Puntaje prueba de selección", 
-     xlab = "Puntaje prueba de selección", ylab = "Frecuencia", xlim = c(50,100))
+hist(muestra$PrbSel, main = "Histograma: Puntaje prueba de selecciÃ³n", 
+     xlab = "Puntaje prueba de selecciÃ³n", ylab = "Frecuencia", xlim = c(50,100))
 dev.off()
 
 pdf("t49PrbSel.pdf")
 t49PrbSel<-table(muestra$PrbSel,muestra$CuotMora)
-plot(CuotMora~PrbSel,data = muestra,col=coloresCM,ylab="Máximas cuotas en mora alcanzadas",xlab="Puntaje prueba de selección",
-     main="Puntaje prueba de selección vs Máximas cuotas en mora alcanzadas")
+plot(CuotMora~PrbSel,data = muestra,col=coloresCM,ylab="MÃ¡ximas cuotas en mora alcanzadas",xlab="Puntaje prueba de selecciÃ³n",
+     main="Puntaje prueba de selecciÃ³n vs MÃ¡ximas cuotas en mora alcanzadas")
 dev.off()
 
 pdf("t49_R_PrbSel.pdf")
 t49_R_PrbSel<-table(muestra$PrbSel,muestra$Riesgo)
-plot(Riesgo~PrbSel,data = muestra,col=coloresCM,ylab="Riesgo",main="Puntaje prueba de selección vs Riesgo",xlab="Puntaje prueba de selección")
+plot(Riesgo~PrbSel,data = muestra,col=coloresCM,ylab="Riesgo",main="Puntaje prueba de selecciÃ³n vs Riesgo",xlab="Puntaje prueba de selecciÃ³n")
 dev.off()
 
 pdf("t49_D_PrbSel.pdf")
 t49_D_PrbSel<-table(muestra$PrbSel,muestra$Default)
-plot(Default~PrbSel,data = muestra,col=coloresCM,ylab="Default",main="Puntaje prueba de selección vs Default",xlab="Puntaje prueba de selección")
+plot(Default~PrbSel,data = muestra,col=coloresCM,ylab="Default",main="Puntaje prueba de selecciÃ³n vs Default",xlab="Puntaje prueba de selecciÃ³n")
 dev.off()
 
 #RANGOS
 
 pdf("t49PrbSelR.pdf")
 t49PrbSelR<-table(muestra$PrbSel.binned,muestra$CuotMora)
-plot(CuotMora~PrbSel.binned,data = muestra,col=coloresCM,ylab="Máximas cuotas en mora alcanzadas",xlab="Puntaje prueba de selección",
-     main="Puntaje prueba de selección vs Máximas cuotas en mora alcanzadas")
+plot(CuotMora~PrbSel.binned,data = muestra,col=coloresCM,ylab="MÃ¡ximas cuotas en mora alcanzadas",xlab="Puntaje prueba de selecciÃ³n",
+     main="Puntaje prueba de selecciÃ³n vs MÃ¡ximas cuotas en mora alcanzadas")
 dev.off()
 
 pdf("t49_R_PrbSelR.pdf")
 t49_R_PrbSelR<-table(muestra$PrbSel.binned,muestra$Riesgo)
-plot(Riesgo~PrbSel.binned,data = muestra,col=coloresCM,ylab="Riesgo",main="Puntaje prueba de selección vs Riesgo",xlab="Puntaje prueba de selección")
+plot(Riesgo~PrbSel.binned,data = muestra,col=coloresCM,ylab="Riesgo",main="Puntaje prueba de selecciÃ³n vs Riesgo",xlab="Puntaje prueba de selecciÃ³n")
 dev.off()
 
 pdf("t49_D_PrbSelR.pdf")
 t49_D_PrbSelR<-table(muestra$PrbSel.binned,muestra$Default)
-plot(Default~PrbSel.binned,data = muestra,col=coloresCM,ylab="Default",main="Puntaje prueba de selección vs Default",xlab="Puntaje prueba de selección")
+plot(Default~PrbSel.binned,data = muestra,col=coloresCM,ylab="Default",main="Puntaje prueba de selecciÃ³n vs Default",xlab="Puntaje prueba de selecciÃ³n")
 dev.off()
 
 #50Ingresos/Egresos################################################################################################################################
 pdf("t50Ing_Egr.pdf")
 t50Ing_Egr<-table(muestra$Ing_Egr,muestra$CuotMora)
-plot(CuotMora~Ing_Egr,data = muestra,col=coloresCM,ylab="Máximas cuotas en mora alcanzadas",xlab="Ingresos/Egresos",
-     main="Ingresos/Egresos vs Máximas cuotas en mora alcanzadas")
+plot(CuotMora~Ing_Egr,data = muestra,col=coloresCM,ylab="MÃ¡ximas cuotas en mora alcanzadas",xlab="Ingresos/Egresos",
+     main="Ingresos/Egresos vs MÃ¡ximas cuotas en mora alcanzadas")
 dev.off()
 
 pdf("t50_R_Ing_Egr.pdf")
@@ -1853,8 +1852,8 @@ dev.off()
 #51Cuenta ahorros##################################################################################################################################
 pdf("t51CtaAh.pdf")
 t51CtaAh<-table(muestra$CtaAh,muestra$CuotMora)
-plot(CuotMora~CtaAh,data = muestra,col=coloresCM,ylab="Máximas cuotas en mora alcanzadas",xlab="Tener cuenta de ahorros",
-     main="Tener cuenta de ahorros vs Máximas cuotas en mora alcanzadas")
+plot(CuotMora~CtaAh,data = muestra,col=coloresCM,ylab="MÃ¡ximas cuotas en mora alcanzadas",xlab="Tener cuenta de ahorros",
+     main="Tener cuenta de ahorros vs MÃ¡ximas cuotas en mora alcanzadas")
 dev.off()
 
 pdf("t51_R_CtaAh.pdf")
@@ -1870,8 +1869,8 @@ dev.off()
 #52Cuenta corriente################################################################################################################################
 pdf("t52CtaCte.pdf")
 t52CtaCte<-table(muestra$CtaCte,muestra$CuotMora)
-plot(CuotMora~CtaCte,data = muestra,col=coloresCM,ylab="Máximas cuotas en mora alcanzadas",xlab="Tener cuenta corriente",
-     main="Tener cuenta corriente vs Máximas cuotas en mora alcanzadas")
+plot(CuotMora~CtaCte,data = muestra,col=coloresCM,ylab="MÃ¡ximas cuotas en mora alcanzadas",xlab="Tener cuenta corriente",
+     main="Tener cuenta corriente vs MÃ¡ximas cuotas en mora alcanzadas")
 dev.off()
 
 pdf("t52_R_CtaCte.pdf")
@@ -1887,35 +1886,35 @@ dev.off()
 #53Tarjeta de credito##############################################################################################################################
 pdf("t53TarjCred.pdf")
 t53TarjCred<-table(muestra$TarjCred,muestra$CuotMora)
-plot(CuotMora~TarjCred,data = muestra,col=coloresCM,ylab="Máximas cuotas en mora alcanzadas",xlab="Tener tarjeta de crédito",
-     main="Tener tarjeta de crédito vs Máximas cuotas en mora alcanzadas")
+plot(CuotMora~TarjCred,data = muestra,col=coloresCM,ylab="MÃ¡ximas cuotas en mora alcanzadas",xlab="Tener tarjeta de crÃ©dito",
+     main="Tener tarjeta de crÃ©dito vs MÃ¡ximas cuotas en mora alcanzadas")
 dev.off()
 
 pdf("t53_R_TarjCred.pdf")
 t53_R_TarjCred<-table(muestra$TarjCred,muestra$Riesgo)
-plot(Riesgo~TarjCred,data = muestra,col=coloresCM,ylab="Riesgo",main="Tener tarjeta de crédito vs Riesgo",xlab="Tener tarjeta de crédito")
+plot(Riesgo~TarjCred,data = muestra,col=coloresCM,ylab="Riesgo",main="Tener tarjeta de crÃ©dito vs Riesgo",xlab="Tener tarjeta de crÃ©dito")
 dev.off()
 
 pdf("t53_D_TarjCred.pdf")
 t53_D_TarjCred<-table(muestra$TarjCred,muestra$Default)
-plot(Default~TarjCred,data = muestra,col=coloresCM,ylab="Default",main="Tener tarjeta de crédito vs Default",xlab="Tener tarjeta de crédito")
+plot(Default~TarjCred,data = muestra,col=coloresCM,ylab="Default",main="Tener tarjeta de crÃ©dito vs Default",xlab="Tener tarjeta de crÃ©dito")
 dev.off()
 
 #54creditos#######################################################################################################################################
 pdf("t54Cred.pdf")
 t54Cred<-table(muestra$Creditos,muestra$CuotMora)
-plot(CuotMora~Creditos,data = muestra,col=coloresCM,ylab="Máximas cuotas en mora alcanzadas",xlab="Tener créditos",
-     main="Tener créditos vs Máximas cuotas en mora alcanzadas")
+plot(CuotMora~Creditos,data = muestra,col=coloresCM,ylab="MÃ¡ximas cuotas en mora alcanzadas",xlab="Tener crÃ©ditos",
+     main="Tener crÃ©ditos vs MÃ¡ximas cuotas en mora alcanzadas")
 dev.off()
 
 pdf("t54_R_Cred.pdf")
 t54_R_Cred<-table(muestra$Creditos,muestra$Riesgo)
-plot(Riesgo~Creditos,data = muestra,col=coloresCM,ylab="Riesgo",main="Tener créditos vs Riesgo",xlab="Tener créditos")
+plot(Riesgo~Creditos,data = muestra,col=coloresCM,ylab="Riesgo",main="Tener crÃ©ditos vs Riesgo",xlab="Tener crÃ©ditos")
 dev.off()
 
 pdf("t54_D_Cred.pdf")
 t54_D_Cred<-table(muestra$Creditos,muestra$Default)
-plot(Default~Creditos,data = muestra,col=coloresCM,ylab="Default",main="Tener créditos vs Default",xlab="Tener créditos")
+plot(Default~Creditos,data = muestra,col=coloresCM,ylab="Default",main="Tener crÃ©ditos vs Default",xlab="Tener crÃ©ditos")
 dev.off()
 
 #55Productos Bancarios##############################################################################################################################
@@ -1929,8 +1928,8 @@ dev.off()
 
 pdf("t55PtsBanc.pdf")
 t55PtsBanc<-table(muestra$Pts_Banc,muestra$CuotMora)
-plot(CuotMora~Pts_Banc,data = muestra,col=coloresCM,ylab="Máximas cuotas en mora alcanzadas",xlab="Productos financieros",
-     main="Productos financieros vs Máximas cuotas en mora alcanzadas")
+plot(CuotMora~Pts_Banc,data = muestra,col=coloresCM,ylab="MÃ¡ximas cuotas en mora alcanzadas",xlab="Productos financieros",
+     main="Productos financieros vs MÃ¡ximas cuotas en mora alcanzadas")
 dev.off()
 
 pdf("t55_R_PtsBanc.pdf")
@@ -1947,8 +1946,8 @@ dev.off()
 
 pdf("t55PtsBancR.pdf")
 t55PtsBancR<-table(muestra$Pts_Banc.binned,muestra$CuotMora)
-plot(CuotMora~Pts_Banc.binned,data = muestra,col=coloresCM,ylab="Máximas cuotas en mora alcanzadas",xlab="Productos financieros",
-     main="Productos financieros vs Máximas cuotas en mora alcanzadas")
+plot(CuotMora~Pts_Banc.binned,data = muestra,col=coloresCM,ylab="MÃ¡ximas cuotas en mora alcanzadas",xlab="Productos financieros",
+     main="Productos financieros vs MÃ¡ximas cuotas en mora alcanzadas")
 dev.off()
 
 pdf("t55_R_PtsBancR.pdf")
@@ -1964,8 +1963,8 @@ dev.off()
 #56Vivienda########################################################################################################################################
 pdf("t56B_viv.pdf")
 t56B_viv<-table(muestra$B_viv,muestra$CuotMora)
-plot(CuotMora~B_viv,data = muestra,col=coloresCM,ylab="Máximas cuotas en mora alcanzadas",xlab="Poseer bienes: vivienda",
-     main="Poseer bienes: vivienda vs Máximas cuotas en mora alcanzadas")
+plot(CuotMora~B_viv,data = muestra,col=coloresCM,ylab="MÃ¡ximas cuotas en mora alcanzadas",xlab="Poseer bienes: vivienda",
+     main="Poseer bienes: vivienda vs MÃ¡ximas cuotas en mora alcanzadas")
 dev.off()
 
 pdf("t56_R_B_viv.pdf")
@@ -1981,8 +1980,8 @@ dev.off()
 #57Computador#######################################################################################################################################
 pdf("t57B_comp.pdf")
 t57B_comp<-table(muestra$B_comp,muestra$CuotMora)
-plot(CuotMora~B_comp,data = muestra,col=coloresCM,ylab="Máximas cuotas en mora alcanzadas",xlab="Poseer bienes: computador",
-     main="Poseer bienes: computador vs Máximas cuotas en mora alcanzadas")
+plot(CuotMora~B_comp,data = muestra,col=coloresCM,ylab="MÃ¡ximas cuotas en mora alcanzadas",xlab="Poseer bienes: computador",
+     main="Poseer bienes: computador vs MÃ¡ximas cuotas en mora alcanzadas")
 dev.off()
 
 pdf("t57_R_B_comp.pdf")
@@ -1998,8 +1997,8 @@ dev.off()
 #58Celular##########################################################################################################################################
 pdf("t58B_cel.pdf")
 t58B_cel<-table(muestra$B_cel,muestra$CuotMora)
-plot(CuotMora~B_cel,data = muestra,col=coloresCM,ylab="Máximas cuotas en mora alcanzadas",xlab="Poseer bienes: celular",
-     main="Poseer bienes: celular vs Máximas cuotas en mora alcanzadas")
+plot(CuotMora~B_cel,data = muestra,col=coloresCM,ylab="MÃ¡ximas cuotas en mora alcanzadas",xlab="Poseer bienes: celular",
+     main="Poseer bienes: celular vs MÃ¡ximas cuotas en mora alcanzadas")
 dev.off()
 
 pdf("t58_R_B_cel.pdf")
@@ -2015,8 +2014,8 @@ dev.off()
 #59Moto#############################################################################################################################################
 pdf("t59B_moto.pdf")
 t59B_moto<-table(muestra$B_moto,muestra$CuotMora)
-plot(CuotMora~B_moto,data = muestra,col=coloresCM,ylab="Máximas cuotas en mora alcanzadas",xlab="Poseer bienes: moto",
-     main="Poseer bienes: moto vs Máximas cuotas en mora alcanzadas")
+plot(CuotMora~B_moto,data = muestra,col=coloresCM,ylab="MÃ¡ximas cuotas en mora alcanzadas",xlab="Poseer bienes: moto",
+     main="Poseer bienes: moto vs MÃ¡ximas cuotas en mora alcanzadas")
 dev.off()
 
 pdf("t59_R_B_moto.pdf")
@@ -2032,8 +2031,8 @@ dev.off()
 #60Carro############################################################################################################################################
 pdf("t60B_carro.pdf")
 t60B_carro<-table(muestra$B_carro,muestra$CuotMora)
-plot(CuotMora~B_carro,data = muestra,col=coloresCM,ylab="Máximas cuotas en mora alcanzadas",xlab="Poseer bienes: carro",
-     main="Poseer bienes: carro vs Máximas cuotas en mora alcanzadas")
+plot(CuotMora~B_carro,data = muestra,col=coloresCM,ylab="MÃ¡ximas cuotas en mora alcanzadas",xlab="Poseer bienes: carro",
+     main="Poseer bienes: carro vs MÃ¡ximas cuotas en mora alcanzadas")
 dev.off()
 
 pdf("t60_R_B_carro.pdf")
@@ -2057,8 +2056,8 @@ dev.off()
 
 pdf("t61B_pond.pdf")
 t61B_pond<-table(muestra$B_pond,muestra$CuotMora)
-plot(CuotMora~B_pond,data = muestra,col=coloresCM,ylab="Máximas cuotas en mora alcanzadas",xlab="Bienes ponderados",
-     main="Bienes ponderados vs Máximas cuotas en mora alcanzadas")
+plot(CuotMora~B_pond,data = muestra,col=coloresCM,ylab="MÃ¡ximas cuotas en mora alcanzadas",xlab="Bienes ponderados",
+     main="Bienes ponderados vs MÃ¡ximas cuotas en mora alcanzadas")
 dev.off()
 
 pdf("t61_R_B_pond.pdf")
@@ -2075,8 +2074,8 @@ dev.off()
 
 pdf("t61B_pondR.pdf")
 t61B_pondR<-table(muestra$B_pond.binned,muestra$CuotMora)
-plot(CuotMora~B_pond.binned,data = muestra,col=coloresCM,ylab="Máximas cuotas en mora alcanzadas",xlab="Bienes ponderados",
-     main="Bienes ponderados vs Máximas cuotas en mora alcanzadas")
+plot(CuotMora~B_pond.binned,data = muestra,col=coloresCM,ylab="MÃ¡ximas cuotas en mora alcanzadas",xlab="Bienes ponderados",
+     main="Bienes ponderados vs MÃ¡ximas cuotas en mora alcanzadas")
 dev.off()
 
 pdf("t61_R_B_pondR.pdf")
@@ -2092,25 +2091,25 @@ dev.off()
 #62Pagare############################################################################################################################################
 pdf("t62Pagare.pdf")
 t62Pagare<-table(muestra$Pagare,muestra$CuotMora)
-plot(CuotMora~Pagare,data = muestra,col=coloresCM,ylab="Máximas cuotas en mora alcanzadas",xlab="Pagaré",
-     main="Pagaré vs Máximas cuotas en mora alcanzadas")
+plot(CuotMora~Pagare,data = muestra,col=coloresCM,ylab="MÃ¡ximas cuotas en mora alcanzadas",xlab="PagarÃ©",
+     main="PagarÃ© vs MÃ¡ximas cuotas en mora alcanzadas")
 dev.off()
 
 pdf("t62_R_Pagare.pdf")
 t62_R_Pagare<-table(muestra$Pagare,muestra$Riesgo)
-plot(Riesgo~Pagare,data = muestra,col=coloresCM,ylab="Riesgo",main="Pagaré vs Riesgo",xlab="Pagaré")
+plot(Riesgo~Pagare,data = muestra,col=coloresCM,ylab="Riesgo",main="PagarÃ© vs Riesgo",xlab="PagarÃ©")
 dev.off()
 
 pdf("t62_D_Pagare.pdf")
 t62_D_Pagare<-table(muestra$Pagare,muestra$Default)
-plot(Default~Pagare,data = muestra,col=coloresCM,ylab="Default",main="Pagaré vs Default",xlab="Pagaré")
+plot(Default~Pagare,data = muestra,col=coloresCM,ylab="Default",main="PagarÃ© vs Default",xlab="PagarÃ©")
 dev.off()
 
 #63Scoring################################################################################################################################
 pdf("t63Scoring.pdf")
 t63Scoring<-table(muestra$Scoring,muestra$CuotMora)
-plot(CuotMora~Scoring,data = muestra,col=coloresCM,ylab="Máximas cuotas en mora alcanzadas",xlab="Scoring",
-     main="Scoring vs Máximas cuotas en mora alcanzadas")
+plot(CuotMora~Scoring,data = muestra,col=coloresCM,ylab="MÃ¡ximas cuotas en mora alcanzadas",xlab="Scoring",
+     main="Scoring vs MÃ¡ximas cuotas en mora alcanzadas")
 dev.off()
 
 pdf("t63_R_Scoring.pdf")
@@ -2127,8 +2126,8 @@ dev.off()
 
 pdf("t63ScoringR.pdf")
 t63ScoringR<-table(muestra$Scoring.binned,muestra$CuotMora)
-plot(CuotMora~Scoring.binned,data = muestra,col=coloresCM,ylab="Máximas cuotas en mora alcanzadas",xlab="Scoring",
-     main="Scoring vs Máximas cuotas en mora alcanzadas")
+plot(CuotMora~Scoring.binned,data = muestra,col=coloresCM,ylab="MÃ¡ximas cuotas en mora alcanzadas",xlab="Scoring",
+     main="Scoring vs MÃ¡ximas cuotas en mora alcanzadas")
 dev.off()
  
 pdf("t63_R_ScoringR.pdf")
